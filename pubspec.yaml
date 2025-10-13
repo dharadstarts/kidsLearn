@@ -19,25 +19,42 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   flutter_native_splash: ^2.3.7
+  get: ^4.7.2
+  provider: ^6.0.6
 
 flutter_native_splash:
-  color: "#000000"
-  image: assets/ic_splash.png
+  color: "#f6f2ed"
+  image: assets/images/ic_logo.png
   android: true
   ios: true
-  android_gravity: fill
-  ios_content_mode: scaleToFill
-  fill: true
+  android_gravity: center
+  ios_content_mode: center
   android_12:
-    image: assets/ic_splash.png
-    color: "#000000"
+    image: assets/images/ic_logo.png
+    color: "#f6f2ed"
 
 flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/ic_splash.png
+    - assets/images/ic_splash1.png
+    - assets/images/ic_logo.png
+    - assets/images/Home/ic_home_bg.png
+    - assets/images/Home/ic_category1.png
+    - assets/images/Home/ic_category2.png
+    - assets/images/Home/ic_category3.png
+    - assets/images/Home/ic_category4.png
+    - assets/images/Home/ic_category5.png
+    - assets/images/Home/ic_category6.png
+    - assets/images/Home/ic_learn.png
+    - assets/images/Home/ic_draw.png
+    - assets/images/Home/ic_tap.png
+    - assets/images/Home/ic_sleep.png
+    - assets/images/Home/ic_puzzle.png
+    - assets/images/Home/ic_maths.png
+    - assets/images/Home/ic_spelling.png
+    - assets/images/Home/ic_quiz.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -51,10 +68,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: Poppins
+       fonts:
+         - asset: assets/fonts/Poppins-Black.ttf
+         - asset: assets/fonts/Poppins-Bold.ttf
+         - asset: assets/fonts/Poppins-Light.ttf
+         - asset: assets/fonts/Poppins-Medium.ttf
+         - asset: assets/fonts/Poppins-Regular.ttf
+         - asset: assets/fonts/Poppins-SemiBold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

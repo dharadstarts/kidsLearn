@@ -32,13 +32,13 @@ class CategoryWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: [-25.0, -20.0, -15.0, -25.0, -20.0, -15.0][index % 6],
+              top: [-25.0, -20.0, -15.0, -25.0, -15.0, -15.0][index % 6],
               left: 0,
               right: 0,
               child: Center(
                 child: Image.asset(
                   category.centerImagePath,
-                  height: 55,
+                  height: 62,
                   fit: BoxFit.contain,
                 ),
               ),

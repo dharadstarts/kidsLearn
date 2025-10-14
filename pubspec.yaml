@@ -55,6 +55,25 @@ flutter:
     - assets/images/Home/ic_maths.png
     - assets/images/Home/ic_spelling.png
     - assets/images/Home/ic_quiz.png
+    - assets/images/categoryList/ic_bg.png
+    - assets/images/categoryList/ic_alpha.png
+    - assets/images/categoryList/ic_animals.png
+    - assets/images/categoryList/ic_birds.png
+    - assets/images/categoryList/ic_bodypart.png
+    - assets/images/categoryList/ic_categoryListBg.png
+    - assets/images/categoryList/ic_color.png
+    - assets/images/categoryList/ic_commingsoon.png
+    - assets/images/categoryList/ic_numbers.png
+    - assets/images/categoryList/ic_shape1.png
+    - assets/images/categoryList/ic_shape2.png
+    - assets/images/categoryList/ic_shape3.png
+    - assets/images/categoryList/ic_shape4.png
+    - assets/images/categoryList/ic_shape5.png
+    - assets/images/categoryList/ic_shape6.png
+    - assets/images/categoryList/ic_shape7.png
+    - assets/images/categoryList/ic_shape8.png
+    - assets/images/categoryList/ic_shapes.png
+    - assets/images/categoryList/ic_vegetables.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

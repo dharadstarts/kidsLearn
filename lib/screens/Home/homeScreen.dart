@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Home/Models/category_model.dart';
 import '../Home//ViewModels/category_view_model.dart';
+import 'categoryList_Screen.dart';
 import '../Home//Widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,8 @@ class HomeScreen extends StatelessWidget {
                                       "Good afternoon!",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                                        fontFamily: 'Poppins',
+                                        fontSize: 22,
                                         color: Colors.brown,
                                       ),
                                     ),
@@ -85,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                                         index: index,
                                         category: category,
                                         width: boxWidth,
-                                        onTap: viewModel.onCategoryTapped,
+                                        onTap: (i) => viewModel.onCategoryTapped(context, i),
                                       );
                                     },
                                   ),
@@ -154,11 +156,11 @@ class HomeScreen extends StatelessWidget {
     String? trailingImagePath, // image on right
   }) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 22),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         gradient: gradient,
-        borderRadius: BorderRadius.circular(45),
+        borderRadius: BorderRadius.circular(40),
       ),
       child: Row(
         children: [
@@ -175,29 +177,36 @@ class HomeScreen extends StatelessWidget {
 
           // --- Text Column ---
           Expanded(
-            child: Column(
-              crossAxisAlignment: leadingImagePath != null
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0,right: 10.0),
+              child: Column(
+                crossAxisAlignment: leadingImagePath != null
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    textAlign:  TextAlign.right,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Poppins',
+                      fontSize: 26,
+                      color: leadingImagePath != null ? Color(0xFF5e3001) : Colors.white ,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    textAlign: leadingImagePath != null ? TextAlign.right : TextAlign.left,
+                    style:  TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      color: leadingImagePath != null ? Color(0xFF5e3001) : Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 

@@ -27,7 +27,7 @@ final List<Category> categoriesList = [
     centerImagePath: 'assets/images/categoryList/ic_bodypart.png',
   ),
   Category(
-    label: 'AnimalsAnimalsAnimalsAnimalsAnimalsAnimalsAnimalsAnimalsAnimals',
+    label: 'Animals',
     bgImagePath: 'assets/images/categoryList/ic_shape6.png',
     centerImagePath: 'assets/images/categoryList/ic_animals.png',
   ),

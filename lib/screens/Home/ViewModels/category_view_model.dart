@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Home/categoryDetailListScreen.dart';
 import '../Models/category_model.dart';
 import '../Data/category_data.dart';
 import '../Data/category_list_data.dart';
@@ -22,4 +23,14 @@ class CategoryViewModel extends ChangeNotifier {
     );
   }
 
+  void onSubCategoryTapped(BuildContext context, int index) {
+    selectedIndex = index;
+    notifyListeners();
+    final String title = arrCategoriesList[index].label;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => CategoryDetailListScreen(title: title),
+      ),
+    );
+  }
 }

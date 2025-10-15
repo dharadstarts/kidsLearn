@@ -74,6 +74,36 @@ flutter:
     - assets/images/categoryList/ic_shape8.png
     - assets/images/categoryList/ic_shapes.png
     - assets/images/categoryList/ic_vegetables.png
+    - assets/images/categoryDetailList/alphabets/ic_apple.png
+    - assets/images/categoryDetailList/alphabets/ic_ball.png
+    - assets/images/categoryDetailList/alphabets/ic_cat.png
+    - assets/images/categoryDetailList/alphabets/ic_dog.png
+    - assets/images/categoryDetailList/alphabets/ic_elephent.png
+    - assets/images/categoryDetailList/alphabets/ic_fish.png
+    - assets/images/categoryDetailList/alphabets/ic_grapes.png
+    - assets/images/categoryDetailList/alphabets/ic_horse.png
+    - assets/images/categoryDetailList/alphabets/ic_icecream.png
+    - assets/images/categoryDetailList/alphabets/ic_joker.png
+    - assets/images/categoryDetailList/alphabets/ic_kite.png
+    - assets/images/categoryDetailList/alphabets/ic_lion.png
+    - assets/images/categoryDetailList/alphabets/ic_monkey.png
+    - assets/images/categoryDetailList/alphabets/ic_nest.png
+    - assets/images/categoryDetailList/alphabets/ic_orange.png
+    - assets/images/categoryDetailList/alphabets/ic_owl.png
+    - assets/images/categoryDetailList/alphabets/ic_parrot.png
+    - assets/images/categoryDetailList/alphabets/ic_rabbit.png
+    - assets/images/categoryDetailList/alphabets/ic_sparrow.png
+    - assets/images/categoryDetailList/alphabets/ic_tiger.png
+    - assets/images/categoryDetailList/alphabets/ic_umbrella.png
+    - assets/images/categoryDetailList/alphabets/ic_violion.png
+    - assets/images/categoryDetailList/alphabets/ic_watch.png
+    - assets/images/categoryDetailList/alphabets/ic_xtree.png
+    - assets/images/categoryDetailList/alphabets/ic_yak.png
+    - assets/images/categoryDetailList/alphabets/ic_zebra.png
+    - assets/images/categoryDetailList/ic_commonShape.png
+    - assets/images/categoryDetailList/ic_categoryItembg.png
+    - assets/images/categoryDetailList/ic_iteamBg.png
+    - assets/images/categoryDetailList/numbers/ic_number1.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

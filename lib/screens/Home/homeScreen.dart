@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../Home/Models/category_model.dart';
-import '../Home//ViewModels/category_view_model.dart';
-import 'categoryList_Screen.dart';
-import '../Home//Widgets/category_widget.dart';
+import '../Home/ViewModels/category_view_model.dart';
+import '../Home/Widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {

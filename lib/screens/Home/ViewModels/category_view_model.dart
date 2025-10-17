@@ -9,7 +9,6 @@ class CategoryViewModel extends ChangeNotifier {
   List<Category> categoryList = categories;
   List<Category> arrCategoriesList = categoriesList;
 
-
   int? selectedIndex;
 
   void onCategoryTapped(BuildContext context, int index) {

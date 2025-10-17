@@ -104,6 +104,43 @@ flutter:
     - assets/images/categoryDetailList/ic_categoryItembg.png
     - assets/images/categoryDetailList/ic_iteamBg.png
     - assets/images/categoryDetailList/numbers/ic_number1.png
+    - assets/images/categoryDetailList/numbers/ic_number2.png
+    - assets/images/categoryDetailList/numbers/ic_number3.png
+    - assets/images/categoryDetailList/numbers/ic_number4.png
+    - assets/images/categoryDetailList/numbers/ic_number5.png
+    - assets/images/categoryDetailList/numbers/ic_number6.png
+    - assets/images/categoryDetailList/numbers/ic_number7.png
+    - assets/images/categoryDetailList/numbers/ic_number8.png
+    - assets/images/categoryDetailList/numbers/ic_number9.png
+    - assets/images/categoryDetailList/numbers/ic_number0.png
+    - assets/images/categoryDetailList/colors/ic_color_white.png
+    - assets/images/categoryDetailList/colors/ic_black.png
+    - assets/images/categoryDetailList/colors/ic_blue.png
+    - assets/images/categoryDetailList/colors/ic_brown.png
+    - assets/images/categoryDetailList/colors/ic_cyan.png
+    - assets/images/categoryDetailList/colors/ic_gray.png
+    - assets/images/categoryDetailList/colors/ic_green.png
+    - assets/images/categoryDetailList/colors/ic_light_green.png
+    - assets/images/categoryDetailList/colors/ic_orange.png
+    - assets/images/categoryDetailList/colors/ic_pink.png
+    - assets/images/categoryDetailList/colors/ic_purple.png
+    - assets/images/categoryDetailList/colors/ic_red.png
+    - assets/images/categoryDetailList/colors/ic_sky_blue.png
+    - assets/images/categoryDetailList/colors/ic_yellow.png
+    - assets/images/categoryDetailList/shapes/ic_circle.png
+    - assets/images/categoryDetailList/shapes/ic_corn.png
+    - assets/images/categoryDetailList/shapes/ic_cube.png
+    - assets/images/categoryDetailList/shapes/ic_cylinder.png
+    - assets/images/categoryDetailList/shapes/ic_diamond.png
+    - assets/images/categoryDetailList/shapes/ic_heart.png
+    - assets/images/categoryDetailList/shapes/ic_hexagonal.png
+    - assets/images/categoryDetailList/shapes/ic_octagon.png
+    - assets/images/categoryDetailList/shapes/ic_oval.png
+    - assets/images/categoryDetailList/shapes/ic_pentagon.png
+    - assets/images/categoryDetailList/shapes/ic_prism.png
+    - assets/images/categoryDetailList/shapes/ic_rectangle.png
+    - assets/images/categoryDetailList/shapes/ic_star.png
+    - assets/images/categoryDetailList/shapes/ic_traingle.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

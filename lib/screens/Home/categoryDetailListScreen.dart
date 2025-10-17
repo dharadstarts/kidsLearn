@@ -19,7 +19,8 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    final List<CategoryItem> currentItems =
+        categoryItemsMap[widget.title] ?? []; // ✅ Load items dynamically
     return ChangeNotifierProvider(
       create: (_) => CategoryViewModel(),
         child: Consumer<CategoryViewModel>(
@@ -62,7 +63,7 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
                               child: Column(
                                 children: [
                                   GridView.builder(
-                                    itemCount: arrAlphabetItems.length,
+                                    itemCount: currentItems.length,
                                     physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,7 +73,7 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
                                       mainAxisExtent: 180, // height of each card
                                     ),
                                     itemBuilder: (context, index) {
-                                      final CategoryItem category = arrAlphabetItems[index];
+                                      final CategoryItem category = currentItems[index];
                                       return CategoryItemCard(
                                         index: index,
                                         width: gridItemWidth,
@@ -82,7 +83,7 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
                                             MaterialPageRoute(
                                               builder: (_) => CategoryItemViewScreen(
                                                 title: widget.title,
-                                                items: arrAlphabetItems,
+                                                items: currentItems,
                                                 initialIndex: i,
                                               ),
                                             ),

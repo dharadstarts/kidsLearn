@@ -47,6 +47,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
   Widget build(BuildContext context) {
     final CategoryItem current = widget.items[currentIndex];
     final String bigLetter = current.label.isNotEmpty ? current.label[0].toUpperCase() : '';
+    final bool shouldShowBigLetter = widget.title.trim().toLowerCase().contains('alphabet');
 
     return Scaffold(
       // backgroundColor: const Color(0xFFF7EFE8),
@@ -86,23 +87,25 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Big Letter with shadow
-                        Text(
-                          bigLetter,
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 140,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black26,
-                                offset: Offset(4, 6),
-                                blurRadius: 6,
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Big Letter with shadow (only for Alphabets); otherwise keep vertical spacing
+                        shouldShowBigLetter
+                            ? Text(
+                                bigLetter,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 140,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black26,
+                                      offset: Offset(4, 6),
+                                      blurRadius: 6,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(height: 85),
                         const SizedBox(height: 12),
                         // Image with soft drop shadow
                         Container(
@@ -115,7 +118,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: shouldShowBigLetter ? 16 : 45),
                         // Spelling/Label with subtle shadow
                         Text(
                           current.label,
@@ -134,7 +137,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: shouldShowBigLetter ? 16 : 45),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

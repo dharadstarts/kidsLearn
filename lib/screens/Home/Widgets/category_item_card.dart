@@ -18,7 +18,7 @@ class CategoryItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Calculate card height proportionally to width
-    final double cardHeight = width * 1.2; // adjust ratio as needed
+    final double cardHeight = width * 1.5; // adjust ratio as needed
 
     return GestureDetector(
       onTap: () => onTap?.call(index),
@@ -46,9 +46,9 @@ class CategoryItemCard extends StatelessWidget {
               children: [
                 // Center icon/image
                 Flexible(
-                  flex: 6,
+                  flex: 0,
                   child: FractionallySizedBox(
-                    widthFactor: 0.45, // relative to card width
+                    widthFactor: 0.48, // relative to card width
                     child: Image.asset(
                       categoriesDetailList.imageAsset,
                       fit: BoxFit.contain,

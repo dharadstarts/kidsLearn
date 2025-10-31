@@ -141,6 +141,37 @@ flutter:
     - assets/images/categoryDetailList/shapes/ic_rectangle.png
     - assets/images/categoryDetailList/shapes/ic_star.png
     - assets/images/categoryDetailList/shapes/ic_traingle.png
+    - assets/images/categoryDetailList/bodyparts/ic_arm.png
+    - assets/images/categoryDetailList/bodyparts/ic_chest.png
+    - assets/images/categoryDetailList/bodyparts/ic_ears.png
+    - assets/images/categoryDetailList/bodyparts/ic_elbow.png
+    - assets/images/categoryDetailList/bodyparts/ic_eye.png
+    - assets/images/categoryDetailList/bodyparts/ic_eyebrows.png
+    - assets/images/categoryDetailList/bodyparts/ic_face.png
+    - assets/images/categoryDetailList/bodyparts/ic_fingers.png
+    - assets/images/categoryDetailList/bodyparts/ic_hair.png
+    - assets/images/categoryDetailList/bodyparts/ic_hand.png
+    - assets/images/categoryDetailList/bodyparts/ic_heart.png
+    - assets/images/categoryDetailList/bodyparts/ic_heel.png
+    - assets/images/categoryDetailList/bodyparts/ic_kidney.png
+    - assets/images/categoryDetailList/bodyparts/ic_knee.png
+    - assets/images/categoryDetailList/bodyparts/ic_legs.png
+    - assets/images/categoryDetailList/bodyparts/ic_lips.png
+    - assets/images/categoryDetailList/bodyparts/ic_lungs.png
+    - assets/images/categoryDetailList/bodyparts/ic_nails.png
+    - assets/images/categoryDetailList/bodyparts/ic_neck.png
+    - assets/images/categoryDetailList/bodyparts/ic_nose.png
+    - assets/images/categoryDetailList/bodyparts/ic_sholuder.png
+    - assets/images/categoryDetailList/bodyparts/ic_skeleton.png
+    - assets/images/categoryDetailList/bodyparts/ic_skin.png
+    - assets/images/categoryDetailList/bodyparts/ic_skull.png
+    - assets/images/categoryDetailList/bodyparts/ic_sole.png
+    - assets/images/categoryDetailList/bodyparts/ic_stomach.png
+    - assets/images/categoryDetailList/bodyparts/ic_teeth.png
+    - assets/images/categoryDetailList/bodyparts/ic_thumb.png
+    - assets/images/categoryDetailList/bodyparts/ic_tongue.png
+    - assets/images/categoryDetailList/bodyparts/ic_waist.png
+    - assets/images/categoryDetailList/bodyparts/ic_wrist.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

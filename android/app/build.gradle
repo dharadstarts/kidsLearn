@@ -16,7 +16,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = '1.8'  // Changed from JavaVersion.VERSION_1_8 to '1.8'
     }
 
     defaultConfig {

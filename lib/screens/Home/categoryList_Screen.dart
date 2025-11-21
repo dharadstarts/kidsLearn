@@ -92,6 +92,5 @@ class _stateCategoryList extends State<categoryListScreen> {
             },
         ),
     );
-
   }
 }

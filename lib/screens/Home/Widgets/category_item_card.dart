@@ -62,18 +62,18 @@ class CategoryItemCard extends StatelessWidget {
                 Flexible(
                   flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown, // prevents overflow
-                      child: Text(
-                        categoriesDetailList.label,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black87,
-                          fontFamily: 'Poppins',
-                        ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),  // ✔ 3 px left & right
+                    child: Text(
+                      categoriesDetailList.label,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,          // ✔ Wrap into next line
+                      overflow: TextOverflow.visible,
+                      softWrap: true,       // ✔ Ensure wrapping
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),

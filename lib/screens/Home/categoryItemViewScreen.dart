@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Models/category_item_model.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class CategoryItemViewScreen extends StatefulWidget {
   final String title; // e.g., Alphabets
   final List<CategoryItem> items;
   final int initialIndex;
 
+
   const CategoryItemViewScreen({
     super.key,
     required this.title,
     required this.items,
     required this.initialIndex,
+
   });
 
   @override
@@ -20,11 +23,37 @@ class CategoryItemViewScreen extends StatefulWidget {
 
 class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
   late int currentIndex;
+  late FlutterTts flutterTts;
+  bool isSpeaking = false;
 
   @override
   void initState() {
     super.initState();
     currentIndex = widget.initialIndex.clamp(0, widget.items.length - 1);
+    _initTts();
+  }
+
+  void _initTts() async {
+    flutterTts = FlutterTts();
+
+    // Configure TTS for both Android and iOS
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setSpeechRate(0.5); // Slightly slower for clarity
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setPitch(1.0);
+
+    // Set completion handler
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        isSpeaking = false;
+      });
+    });
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        isSpeaking = false;
+      });
+    });
   }
 
   void goPrev() {
@@ -32,6 +61,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
       setState(() {
         currentIndex -= 1;
       });
+      _speakCurrentItem();
     }
   }
 
@@ -40,7 +70,73 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
       setState(() {
         currentIndex += 1;
       });
+      _speakCurrentItem();
     }
+  }
+
+  void _speakCurrentItem() async {
+    if (isSpeaking) {
+      await flutterTts.stop();
+    }
+
+    setState(() {
+      isSpeaking = true;
+    });
+
+    final CategoryItem current = widget.items[currentIndex];
+    final String letter = current.label.isNotEmpty ? current.label[0].toUpperCase() : '';
+    final String word = current.label;
+    if (widget.title == 'Alphabets') {
+      // Speak letter first
+      await flutterTts.speak(letter);
+      // Wait for 2 seconds pause
+      await Future.delayed(const Duration(seconds: 1));
+      // Then speak "A for Apple" format
+      await flutterTts.speak("$letter for $word");
+    } else {
+      await flutterTts.speak("$word");
+    }
+  }
+
+  void _speakWithPause() async {
+    if (isSpeaking) {
+      await flutterTts.stop();
+    }
+
+    setState(() {
+      isSpeaking = true;
+    });
+
+    final CategoryItem current = widget.items[currentIndex];
+    final String letter = current.label.isNotEmpty ? current.label[0].toUpperCase() : '';
+    final String word = current.label;
+
+    try {
+      // Speak just the letter first (e.g., "A")
+      if (widget.title == 'Alphabets') {
+        await flutterTts.speak(letter);
+
+        // Wait for the letter to finish + 2 seconds pause
+        await Future.delayed(const Duration(seconds: 2));
+
+        // Then speak the full phrase (e.g., "A for Apple")
+        await flutterTts.speak("$letter for $word");
+      } else {
+        await flutterTts.speak("$word");
+      }
+
+
+    } catch (e) {
+      setState(() {
+        isSpeaking = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    super.dispose();
   }
 
   @override
@@ -50,17 +146,15 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
     final bool shouldShowBigLetter = widget.title.trim().toLowerCase().contains('alphabet');
 
     return Scaffold(
-      // backgroundColor: const Color(0xFFF7EFE8),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent ,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back, color: Color(0xFF6E4D3F)),
+          icon: Icon(CupertinoIcons.back, color: const Color(0xFF6E4D3F)),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: Text(
-          // textAlign: TextAlign.center,
           widget.title,
           style: const TextStyle(
             color: Color(0xFF6E4D3F),
@@ -90,31 +184,35 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                         // Big Letter with shadow (only for Alphabets); otherwise keep vertical spacing
                         shouldShowBigLetter
                             ? Text(
-                                bigLetter,
-                                style: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 140,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black26,
-                                      offset: Offset(4, 6),
-                                      blurRadius: 6,
-                                    ),
-                                  ],
-                                ),
-                              )
+                          bigLetter,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 120,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black26,
+                                offset: Offset(4, 4),
+                                blurRadius: 4,
+                              ),
+                            ],
+                          ),
+                        )
                             : const SizedBox(height: 85),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 2),
                         // Image with soft drop shadow
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 4),
                           child: SizedBox(
-                            height: constraints.maxHeight * 0.3,
-                            child: Image.asset(
-                              current.imageAsset,
-                              fit: BoxFit.contain,
+                            height: constraints.maxHeight * 0.27,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  current.imageAsset,
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -147,11 +245,16 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                             ),
                             const SizedBox(width: 24),
                             _FilledCircleButton(
-                              icon: Icons.refresh,
+                              icon: isSpeaking ? Icons.stop : Icons.refresh_sharp,
                               onPressed: () {
-                                setState(() {
-                                  currentIndex = 0;
-                                });
+                                if (isSpeaking) {
+                                  flutterTts.stop();
+                                  setState(() {
+                                    isSpeaking = false;
+                                  });
+                                } else {
+                                  _speakWithPause();
+                                }
                               },
                             ),
                             const SizedBox(width: 24),
@@ -204,7 +307,6 @@ class _FilledCircleButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
-        backgroundColor: const Color(0xFF8B6A5A),
         foregroundColor: Colors.white,
         padding: const EdgeInsets.all(14),
         elevation: 4,
@@ -213,5 +315,3 @@ class _FilledCircleButton extends StatelessWidget {
     );
   }
 }
-
-

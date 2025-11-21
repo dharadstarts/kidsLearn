@@ -144,8 +144,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  // --- Banner UI ---
+  // ---  UI Banner---
   Widget buildBanner({
     required Gradient gradient,
     required String title,

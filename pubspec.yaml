@@ -12,6 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  flutter_tts:
+  signature: ^5.3.0
+  flutter_colorpicker: ^1.0.3  # or latest
+  scribble: ^0.2.2
 
 
 dev_dependencies:
@@ -172,6 +176,109 @@ flutter:
     - assets/images/categoryDetailList/bodyparts/ic_tongue.png
     - assets/images/categoryDetailList/bodyparts/ic_waist.png
     - assets/images/categoryDetailList/bodyparts/ic_wrist.png
+    - assets/images/drawing/ic_draw_bg.png
+    - assets/images/drawing/ic_alpha.png
+    - assets/images/drawing/ic_colors.png
+    - assets/images/drawing/ic_numbers.png
+    - assets/images/drawing/ic_shapes.png
+    - assets/images/categoryDetailList/animals/ic_bear.png
+    - assets/images/categoryDetailList/animals/ic_buffalo.png
+    - assets/images/categoryDetailList/animals/ic_camel.png
+    - assets/images/categoryDetailList/animals/ic_cat.png
+    - assets/images/categoryDetailList/animals/ic_chimpanze.png
+    - assets/images/categoryDetailList/animals/ic_cow.png
+    - assets/images/categoryDetailList/animals/ic_dear.png
+    - assets/images/categoryDetailList/animals/ic_dog.png
+    - assets/images/categoryDetailList/animals/ic_donkey.png
+    - assets/images/categoryDetailList/animals/ic_elephant.png
+    - assets/images/categoryDetailList/animals/ic_fox.png
+    - assets/images/categoryDetailList/animals/ic_giraffe.png
+    - assets/images/categoryDetailList/animals/ic_goat.png
+    - assets/images/categoryDetailList/animals/ic_gorila.png
+    - assets/images/categoryDetailList/animals/ic_horse.png
+    - assets/images/categoryDetailList/animals/ic_hyena.png
+    - assets/images/categoryDetailList/animals/ic_kangaroo.png
+    - assets/images/categoryDetailList/animals/ic_lion.png
+    - assets/images/categoryDetailList/animals/ic_lropard.png
+    - assets/images/categoryDetailList/animals/ic_monkey.png
+    - assets/images/categoryDetailList/animals/ic_pig.png
+    - assets/images/categoryDetailList/animals/ic_puma.png
+    - assets/images/categoryDetailList/animals/ic_rabbit.png
+    - assets/images/categoryDetailList/animals/ic_rat.png
+    - assets/images/categoryDetailList/animals/ic_reindeer.png
+    - assets/images/categoryDetailList/animals/ic_rhino.png
+    - assets/images/categoryDetailList/animals/ic_sheep.png
+    - assets/images/categoryDetailList/animals/ic_squirrel.png
+    - assets/images/categoryDetailList/animals/ic_tiger.png
+    - assets/images/categoryDetailList/animals/ic_wolf.png
+    - assets/images/categoryDetailList/animals/ic_yak.png
+    - assets/images/categoryDetailList/animals/ic_zebra.png
+    - assets/images/categoryDetailList/birds/ic_bulbul.png
+    - assets/images/categoryDetailList/birds/ic_crow.png
+    - assets/images/categoryDetailList/birds/ic_cuckoo.png
+    - assets/images/categoryDetailList/birds/ic_duck.png
+    - assets/images/categoryDetailList/birds/ic_eagle.png
+    - assets/images/categoryDetailList/birds/ic_emu.png
+    - assets/images/categoryDetailList/birds/ic_flamingo.png
+    - assets/images/categoryDetailList/birds/ic_goldfinch.png
+    - assets/images/categoryDetailList/birds/ic_gulls.png
+    - assets/images/categoryDetailList/birds/ic_hen.png
+    - assets/images/categoryDetailList/birds/ic_heron.png
+    - assets/images/categoryDetailList/birds/ic_hummingbird.png
+    - assets/images/categoryDetailList/birds/ic_kingfisher.png
+    - assets/images/categoryDetailList/birds/ic_myna.png
+    - assets/images/categoryDetailList/birds/ic_parrot.png
+    - assets/images/categoryDetailList/birds/ic_peacock.png
+    - assets/images/categoryDetailList/birds/ic_penguin.png
+    - assets/images/categoryDetailList/birds/ic_pigeon.png
+    - assets/images/categoryDetailList/birds/ic_sparrow.png
+    - assets/images/categoryDetailList/birds/ic_swan.png
+    - assets/images/categoryDetailList/birds/ic_vulture.png
+    - assets/images/categoryDetailList/birds/ic_woodpeacker.png
+    - assets/images/categoryDetailList/birds/ic_yak.png
+    - assets/images/categoryDetailList/birds/ic_owl.png
+    - assets/images/categoryDetailList/vegetables/ic_beetroot.png
+    - assets/images/categoryDetailList/vegetables/ic_bitergourd.png
+    - assets/images/categoryDetailList/vegetables/ic_bottlegourd.png
+    - assets/images/categoryDetailList/vegetables/ic_brinjal.png
+    - assets/images/categoryDetailList/vegetables/ic_broccoli.png
+    - assets/images/categoryDetailList/vegetables/ic_cabbage.png
+    - assets/images/categoryDetailList/vegetables/ic_capsicum.png
+    - assets/images/categoryDetailList/vegetables/ic_carrot.png
+    - assets/images/categoryDetailList/vegetables/ic_cauliflower.png
+    - assets/images/categoryDetailList/vegetables/ic_chilly.png
+    - assets/images/categoryDetailList/vegetables/ic_clusterbeans.png
+    - assets/images/categoryDetailList/vegetables/ic_corianderleaf.png
+    - assets/images/categoryDetailList/vegetables/ic_corn.png
+    - assets/images/categoryDetailList/vegetables/ic_cucumber.png
+    - assets/images/categoryDetailList/vegetables/ic_curryleaf.png
+    - assets/images/categoryDetailList/vegetables/ic_elephantfootyam.png
+    - assets/images/categoryDetailList/vegetables/ic_fenugreek.png
+    - assets/images/categoryDetailList/vegetables/ic_frenchbeans.png
+    - assets/images/categoryDetailList/vegetables/ic_garlic.png
+    - assets/images/categoryDetailList/vegetables/ic_gherkins.png
+    - assets/images/categoryDetailList/vegetables/ic_ginger.png
+    - assets/images/categoryDetailList/vegetables/ic_greenpeas.png
+    - assets/images/categoryDetailList/vegetables/ic_ladyfinger.png
+    - assets/images/categoryDetailList/vegetables/ic_limabeans.png
+    - assets/images/categoryDetailList/vegetables/ic_mint.png
+    - assets/images/categoryDetailList/vegetables/ic_mushroom.png
+    - assets/images/categoryDetailList/vegetables/ic_onion.png
+    - assets/images/categoryDetailList/vegetables/ic_potatoes.png
+    - assets/images/categoryDetailList/vegetables/ic_raddish.png
+    - assets/images/categoryDetailList/vegetables/ic_spinach.png
+    - assets/images/categoryDetailList/vegetables/ic_squash.png
+    - assets/images/categoryDetailList/vegetables/ic_sweetpotatoes.png
+    - assets/images/categoryDetailList/vegetables/ic_tomato.png
+    - assets/images/categoryDetailList/vegetables/ic_turnip.png
+    - assets/images/drawing/ic_latter_draw_bg.png
+    - assets/images/drawing/ic_sequre.png
+    - assets/images/drawing/ic_circle.png
+    - assets/images/drawing/tringle.png
+    - assets/images/drawing/ic_shape3.png
+    - assets/images/drawing/ic_shape4.png
+    - assets/images/drawing/ic_shape5.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

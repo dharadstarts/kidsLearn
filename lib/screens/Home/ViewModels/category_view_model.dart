@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learn/screens/Home/categoryDetailListScreen.dart';
+import 'package:kids_learn/screens/Home/tapSetListScreen.dart';
 import '../Models/category_model.dart';
 import '../Data/category_data.dart';
 import '../Data/category_list_data.dart';
@@ -24,6 +25,13 @@ class CategoryViewModel extends ChangeNotifier {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => DrawingScreen(),
+          ),
+        );
+        break;
+      case 'tapSet':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => Tapsetlistscreen(title: category.label),
           ),
         );
         break;

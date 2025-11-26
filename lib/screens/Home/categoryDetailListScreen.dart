@@ -22,14 +22,20 @@ class CategoryDetailListScreen extends StatefulWidget {
   });
 
   @override
-  State<CategoryDetailListScreen> createState() => _stateCatergoyDetailListScreen();
+  State<CategoryDetailListScreen> createState() =>
+      _stateCatergoyDetailListScreen();
 }
 
-class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
+class _stateCatergoyDetailListScreen
+    extends State<CategoryDetailListScreen> {
+  void _navigateToItemScreen(
+      int index, List<CategoryItem> currentItems) {
+    // Don't navigate if it's the FILL Colors screen
+    if (widget.screenType == "FILL Colors" && widget.title == "FILL Colors") {
+      return;
+    }
 
-  void _navigateToItemScreen(int index, List<CategoryItem> currentItems) {
     if (widget.screenType == "drawing") {
-      // Navigate to LetterDrawingScreen for drawing
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => LetterDrawingScreen(
@@ -40,7 +46,6 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
         ),
       );
     } else {
-      // Navigate to CategoryItemViewScreen for regular viewing
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => CategoryItemViewScreen(
@@ -70,7 +75,8 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: IconButton(
-                icon: const Icon(CupertinoIcons.back, color: Color(0xFF6E4D3F)),
+                icon: const Icon(CupertinoIcons.back,
+                    color: Color(0xFF6E4D3F)),
                 onPressed: () => Navigator.of(context).maybePop(),
               ),
               title: Text(
@@ -80,68 +86,104 @@ class _stateCatergoyDetailListScreen extends State<CategoryDetailListScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              centerTitle: false,
             ),
-            body: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    'assets/images/categoryDetailList/ic_categoryItembg.png',
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16,bottom: 0,left: 16,right: 16),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final double gridItemWidth = (constraints.maxWidth - 48) / 2;
-
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Column(
-                            children: [
-                              GridView.builder(
-                                itemCount: currentItems.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, // ✅ 2 items per row
-                                  crossAxisSpacing: 20,
-                                  mainAxisSpacing: 8,
-                                  mainAxisExtent: 180, // height of each card
-                                ),
-                                itemBuilder: (context, index) {
-                                  final CategoryItem category = currentItems[index];
-                                  if (widget.screenType == "drawing") {
-                                    return LetterCategoryCard(
-                                      index: index,
-                                      size: gridItemWidth,
-                                      categoriesDetailList: category,
-                                      onTap: (i) {
-                                        _navigateToItemScreen(i, currentItems);
-                                      },
-                                    );
-                                  } else {
-                                    return CategoryItemCard(
-                                      index: index,
-                                      width: gridItemWidth,
-                                      categoriesDetailList: category,
-                                      onTap: (i) {
-                                        _navigateToItemScreen(i, currentItems);
-                                      },
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                return Stack(
+                  children: [
+                    // Background
+                    Positioned.fill(
+                      child: Image.asset(
+                        'assets/images/categoryDetailList/ic_categoryItembg.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                ),
-              ],
+
+                    // Main content scroll
+                    SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            child: Column(
+                              children: [
+                                GridView.builder(
+                                  itemCount: currentItems.length,
+                                  physics:
+                                  const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 12,
+                                    mainAxisExtent: 180,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    final category = currentItems[index];
+
+                                    return widget.screenType == "drawing"
+                                        ? LetterCategoryCard(
+                                      index: index,
+                                      size: (constraints.maxWidth -
+                                          48) /
+                                          2,
+                                      categoriesDetailList: category,
+                                      onTap: (i) {
+                                        _navigateToItemScreen(
+                                            i, currentItems);
+                                      },
+                                    )
+                                        : CategoryItemCard(
+                                      index: index,
+                                      width: (constraints.maxWidth -
+                                          48) /
+                                          2,
+                                      categoriesDetailList: category,
+                                      onTap: (i) {
+                                        _navigateToItemScreen(
+                                            i, currentItems);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // -------------------------------------------------------
+                    //  COMING SOON OVERLAY (ONLY FOR FILL COLORS)
+                    // -------------------------------------------------------
+                    if (widget.screenType == "drawing" &&
+                        widget.title == "FILL Colors")
+                      Positioned.fill(
+                        child: Container(
+                          color: Colors.white70.withOpacity(0.5), // Slightly more opaque
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/drawing/ic_comingsoon.png',
+                                  fit: BoxFit.contain,
+                                  width: constraints.maxWidth * 0.8,
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
           );
         },

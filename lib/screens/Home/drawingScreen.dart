@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Home/Data/category_data.dart';
 import 'Models/category_item_model.dart';
 import 'categoryDetailListScreen.dart';
 
@@ -12,7 +13,6 @@ class DrawingScreen extends StatelessWidget {
     ),
   );
 
-
   final List<CategoryItem> numbersList = List.generate(
     10,
         (i) => CategoryItem(
@@ -20,6 +20,35 @@ class DrawingScreen extends StatelessWidget {
       imageAsset: "",
     ),
   );
+
+  final List<CategoryItem> arrDrawShapes = [
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_sequre.png'),
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_circle.png'),
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_tringle.png'),
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_shape3.png'),
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_shape4.png'),
+    CategoryItem(label: '', imageAsset: 'assets/images/drawing/ic_shape5.png'),
+  ];
+
+  final List<CategoryItem> arrFillShape = [
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image1.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image2.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image3.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image4.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image5.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image6.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image7.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image8.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image9.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image10.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image11.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image12.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image13.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image14.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image15.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image16.png'),
+  ];
+
 
   DrawingScreen({super.key});
 
@@ -38,19 +67,19 @@ class DrawingScreen extends StatelessWidget {
 
           // ✅ Main content
           SafeArea(
-            child: Column(
-              children: [
-                // -------------------- TOP BAR --------------------
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 14),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Back button
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: GestureDetector(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  pinned: true,
+                  automaticallyImplyLeading: false,
+                  toolbarHeight: 70,
+                  flexibleSpace: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        GestureDetector(
                           onTap: () => Navigator.pop(context),
                           child: const Icon(
                             Icons.arrow_back,
@@ -58,30 +87,34 @@ class DrawingScreen extends StatelessWidget {
                             color: Color(0xff6c4e32),
                           ),
                         ),
-                      ),
-
-                      const Text(
-                        "Drawing",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff6c4e32),
+                        const Spacer(),
+                        const Text(
+                          "Drawing",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff6c4e32),
+                          ),
                         ),
-                      ),
-                    ],
+                        const Spacer(),
+                        Opacity(opacity: 0, child: Icon(Icons.arrow_back)),
+                      ],
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 90),
+                const SliverToBoxAdapter(child: SizedBox(height: 60)),
 
-                // -------------------- GRID BUTTONS --------------------
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    children: [
+                // -------------------- GRID LIST --------------------
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  sliver: SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                    ),
+                    delegate: SliverChildListDelegate([
                       _menuCard(
                         imagePath: "assets/images/drawing/ic_alpha.png",
                         title: "Alphabets",
@@ -121,7 +154,7 @@ class DrawingScreen extends StatelessWidget {
                               builder: (_) => CategoryDetailListScreen(
                                 title: "Shapes",
                                 screenType: "drawing",
-                                items: [],
+                                items: arrDrawShapes,
                               ),
                             ),
                           );
@@ -134,15 +167,15 @@ class DrawingScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => CategoryDetailListScreen(
-                                title: "Colors",
+                                title: "FILL Colors",
                                 screenType: "drawing",
-                                items: [],
+                                items: arrFillShape,
                               ),
                             ),
                           );
                         },
                       ),
-                    ],
+                    ]),
                   ),
                 ),
               ],

@@ -274,10 +274,41 @@ flutter:
     - assets/images/drawing/ic_latter_draw_bg.png
     - assets/images/drawing/ic_sequre.png
     - assets/images/drawing/ic_circle.png
-    - assets/images/drawing/tringle.png
+    - assets/images/drawing/ic_tringle.png
     - assets/images/drawing/ic_shape3.png
     - assets/images/drawing/ic_shape4.png
     - assets/images/drawing/ic_shape5.png
+    - assets/images/drawing/ic_fill_image1.png
+    - assets/images/drawing/ic_fill_image2.png
+    - assets/images/drawing/ic_fill_image3.png
+    - assets/images/drawing/ic_fill_image4.png
+    - assets/images/drawing/ic_fill_image5.png
+    - assets/images/drawing/ic_fill_image6.png
+    - assets/images/drawing/ic_fill_image7.png
+    - assets/images/drawing/ic_fill_image8.png
+    - assets/images/drawing/ic_fill_image9.png
+    - assets/images/drawing/ic_fill_image10.png
+    - assets/images/drawing/ic_fill_image11.png
+    - assets/images/drawing/ic_fill_image12.png
+    - assets/images/drawing/ic_fill_image13.png
+    - assets/images/drawing/ic_fill_image14.png
+    - assets/images/drawing/ic_fill_image15.png
+    - assets/images/drawing/ic_fill_image16.png
+    - assets/images/drawing/ic_comingsoon.png
+    - assets/images/TapSet/ic_shape1.png
+    - assets/images/TapSet/ic_shape2.png
+    - assets/images/TapSet/ic_shape3.png
+    - assets/images/TapSet/ic_shape4.png
+    - assets/images/TapSet/ic_shape5.png
+    - assets/images/TapSet/ic_shape6.png
+    - assets/images/TapSet/ic_shape7.png
+    - assets/images/TapSet/ic_shape8.png
+    - assets/images/TapSet/ic_shape9.png
+    - assets/images/TapSet/ic_shape10.png
+    - assets/images/TapSet/ic_tapset_bg.png
+    - assets/images/TapSet/ic_circle.png
+    - assets/images/TapSet/ic_main_box.png
+    - assets/images/TapSet/ic_tapset_deatil_bg.png
 
   #   - images/a_dot_ham.jpeg
 

@@ -280,6 +280,7 @@ final List<CategoryItem> arrBirds = [
   CategoryItem(label: 'Woodpecker', imageAsset: 'assets/images/categoryDetailList/birds/ic_woodpeacker.png'),
 ];
 
+
 final List<CategoryItem> arrVegetables = [
   CategoryItem(label: 'Beetroot', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_beetroot.png'),
   CategoryItem(label: 'Bitter Gourd', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_bitergourd.png'),

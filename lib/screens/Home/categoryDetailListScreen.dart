@@ -34,8 +34,18 @@ class _stateCatergoyDetailListScreen
     if (widget.screenType == "FILL Colors" && widget.title == "FILL Colors") {
       return;
     }
-
-    if (widget.screenType == "drawing") {
+    if (widget.screenType == 'drawing' && widget.title == 'Shapes') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => LetterDrawingScreen(
+            letter: currentItems[index].label.isNotEmpty
+                ? currentItems[index].label[0].toUpperCase()
+                : '',
+            image: currentItems[index].imageAsset,
+          ),
+        ),
+      );
+    } else if (widget.screenType == "drawing") {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => LetterDrawingScreen(

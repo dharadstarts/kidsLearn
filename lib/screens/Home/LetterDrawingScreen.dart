@@ -5,8 +5,9 @@ import 'package:scribble/scribble.dart';
 
 class LetterDrawingScreen extends StatefulWidget {
   final String letter;
+  final String? image;
 
-  const LetterDrawingScreen({super.key, required this.letter});
+  const LetterDrawingScreen({super.key, required this.letter,this.image});
 
   @override
   State<LetterDrawingScreen> createState() => _LetterDrawingScreenState();
@@ -187,27 +188,37 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
             ),
           ),
 
-          /// Big Letter
+          /// Big Letter OR Image
           Align(
             alignment: const Alignment(0.0, -0.5),
-            child: Text(
+            child: widget.letter.isNotEmpty
+                ? Text(
               widget.letter,
               style: const TextStyle(
                 fontSize: 300,
                 fontWeight: FontWeight.bold,
                 color: Colors.brown,
               ),
-            ),
+            )
+                : (widget.image != null
+                ? Image.asset(
+              widget.image!,
+              height: 250,
+              fit: BoxFit.contain,
+            )
+                : const SizedBox()),
           ),
 
           /// Drawing canvas with Scribble
-          Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              margin: const EdgeInsets.only(top: 100, bottom: 200),
+          Positioned(
+            top: 100,
+            left: 0,
+            right: 0,
+            bottom: 230,
+            child: ClipRect(
               child: Scribble(
                 notifier: notifier,
-                drawPen: true,   // <-- valid for your version
+                drawPen: true,
               ),
             ),
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learn/screens/Home/Models/category_item_model.dart';
 
+import 'TapSetDetailsScreen.dart';
+
 class Tapsetlistscreen extends StatelessWidget {
   final String title;
   Tapsetlistscreen({
@@ -40,7 +42,7 @@ class Tapsetlistscreen extends StatelessWidget {
               children: [
                 /// 🔹 Header - positioned at the top of the background image
                 SizedBox(
-                  height: 100, // Fixed height for header section within the image
+                  height: 70, // Fixed height for header section within the image
                   child: Stack(
                     children: [
                       // Center the title within the image design area
@@ -76,25 +78,45 @@ class Tapsetlistscreen extends StatelessWidget {
 
                 /// 🔹 Grid view taking remaining space
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 90,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8,
-                      ),
-                      itemCount: fillItems.length,
-                      itemBuilder: (context, index) {
-                        return _gridItem(
-                          fillItems[index].label,
-                          fillItems[index].imageAsset,
-                        );
-                      },
-                    ),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    itemCount: (fillItems.length / 2).ceil(),
+                    itemBuilder: (context, index) {
+                      int first = index * 2;
+                      int second = first + 1;
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12), // vertical spacing between rows
+                        child: Row(
+                          children: [
+                            /// LEFT ITEM
+                            Expanded(
+                              child: _gridItem(
+                                fillItems[first].label,
+                                fillItems[first].imageAsset,
+                                  context
+                              ),
+                            ),
+
+                            const SizedBox(width: 12), // spacing between left & right
+
+                            /// RIGHT ITEM (if available)
+                            if (second < fillItems.length)
+                              Expanded(
+                                child: _gridItem(
+                                  fillItems[second].label,
+                                  fillItems[second].imageAsset,
+                                  context
+                                ),
+                              )
+                            else
+                              const Expanded(child: SizedBox()),
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -104,51 +126,61 @@ class Tapsetlistscreen extends StatelessWidget {
   }
 
   /// 🔸 Single item card
-  Widget _gridItem(String title, String iconPath) {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/TapSet/ic_tapset_box.png"),
-          fit: BoxFit.fill,
+  Widget _gridItem(String title, String iconPath, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Tapsetdetailsscreen(),
+          ),
+        );
+      },
+      child: Container(
+        height: 85,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          image: const DecorationImage(
+            image: AssetImage("assets/images/TapSet/ic_tapset_box.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // ICON (centered)
-          Positioned(
-            top: 20,
-            child: SizedBox(
-              height: 60,
-              child: Image.asset(
-                iconPath,
-                fit: BoxFit.contain,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 18,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: SizedBox(
+                    height: 70,
+                    child: Image.asset(
+                      iconPath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-
-          // TITLE (left aligned, but still centered as a block)
-          Positioned(
-            bottom: 27,
-            left: 20,
-            right: 20,
-            child: Text(
-              title,
-              textAlign: TextAlign.left,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF5A371A),
+              Positioned(
+                bottom: 18,
+                left: 12,
+                right: 12,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF5A371A),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
-
 
 }

@@ -280,7 +280,6 @@ final List<CategoryItem> arrBirds = [
   CategoryItem(label: 'Woodpecker', imageAsset: 'assets/images/categoryDetailList/birds/ic_woodpeacker.png'),
 ];
 
-
 final List<CategoryItem> arrVegetables = [
   CategoryItem(label: 'Beetroot', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_beetroot.png'),
   CategoryItem(label: 'Bitter Gourd', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_bitergourd.png'),
@@ -317,6 +316,21 @@ final List<CategoryItem> arrVegetables = [
   CategoryItem(label: 'Tomato', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_tomato.png'),
   CategoryItem(label: 'Turnip', imageAsset: 'assets/images/categoryDetailList/vegetables/ic_turnip.png'),
 ];
+
+final List<CategoryItem> tapSetCategories = [
+  CategoryItem(label: 'Animals', imageAsset: 'assets/images/TapSet/ic_shape1.png'),
+  CategoryItem(label: 'Birds', imageAsset: 'assets/images/TapSet/ic_shape2.png'),
+  CategoryItem(label: 'Numbers', imageAsset: 'assets/images/TapSet/ic_shape3.png'),
+  CategoryItem(label: 'Colors', imageAsset: 'assets/images/TapSet/ic_shape4.png'),
+  CategoryItem(label: 'Sea animals', imageAsset: 'assets/images/TapSet/ic_shape5.png'),
+  CategoryItem(label: 'Dry Fruits', imageAsset: 'assets/images/TapSet/ic_shape6.png'),
+  CategoryItem(label: 'Festivals', imageAsset: 'assets/images/TapSet/ic_shape7.png'),
+  CategoryItem(label: 'Flowers', imageAsset: 'assets/images/TapSet/ic_shape8.png'),
+  CategoryItem(label: 'Fruits', imageAsset: 'assets/images/TapSet/ic_shape9.png'),
+  CategoryItem(label: 'Insects', imageAsset: 'assets/images/TapSet/ic_shape10.png'),
+];
+
+
 
 final Map<String, List<CategoryItem>> categoryItemsMap = {
   'Alphabets': arrAlphabetItems,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kids_learn/screens/Home/Data/category_data.dart';
 import 'Models/category_item_model.dart';
 import 'categoryDetailListScreen.dart';
 
@@ -39,7 +38,7 @@ class DrawingScreen extends StatelessWidget {
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image6.png'),
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image7.png'),
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image8.png'),
-    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image9.png'),
+    CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image8.png'),
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image10.png'),
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image11.png'),
     CategoryItem(label:'' ,imageAsset: 'assets/images/drawing/ic_fill_image12.png'),

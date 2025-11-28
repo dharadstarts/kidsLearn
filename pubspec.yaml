@@ -310,6 +310,54 @@ flutter:
     - assets/images/TapSet/ic_circle.png
     - assets/images/TapSet/ic_main_box.png
     - assets/images/TapSet/ic_tapset_deatil_bg.png
+    - assets/images/categoryDetailList/sea animals/ic_crab.png
+    - assets/images/categoryDetailList/sea animals/ic_dolphin.png
+    - assets/images/categoryDetailList/sea animals/ic_eel.png
+    - assets/images/categoryDetailList/sea animals/ic_jellyfish.png
+    - assets/images/categoryDetailList/sea animals/ic_lobster.png
+    - assets/images/categoryDetailList/sea animals/ic_mantee.png
+    - assets/images/categoryDetailList/sea animals/ic_octopus.png
+    - assets/images/categoryDetailList/sea animals/ic_oyster.png
+    - assets/images/categoryDetailList/sea animals/ic_penguin.png
+    - assets/images/categoryDetailList/sea animals/ic_polarbear.png
+    - assets/images/categoryDetailList/sea animals/ic_seahorse.png
+    - assets/images/categoryDetailList/sea animals/ic_seal.png
+    - assets/images/categoryDetailList/sea animals/ic_seaotter.png
+    - assets/images/categoryDetailList/sea animals/ic_sharktank.png
+    - assets/images/categoryDetailList/sea animals/ic_squid.png
+    - assets/images/categoryDetailList/sea animals/ic_starfish.png
+    - assets/images/categoryDetailList/sea animals/ic_tutrle.png
+    - assets/images/categoryDetailList/sea animals/ic_whale.png
+    - assets/images/categoryDetailList/dry druits/ic_almond.png
+    - assets/images/categoryDetailList/dry druits/ic_betelnut.png
+    - assets/images/categoryDetailList/dry druits/ic_cashewnut.png
+    - assets/images/categoryDetailList/dry druits/ic_datesdried.png
+    - assets/images/categoryDetailList/dry druits/ic_fig.png
+    - assets/images/categoryDetailList/dry druits/ic_flaxseeds.png
+    - assets/images/categoryDetailList/dry druits/ic_groundnut.png
+    - assets/images/categoryDetailList/dry druits/ic_pistachio.png
+    - assets/images/categoryDetailList/dry druits/ic_pumpkinseeds.png
+    - assets/images/categoryDetailList/dry druits/ic_raisin.png
+    - assets/images/categoryDetailList/dry druits/ic_saffron.png
+    - assets/images/categoryDetailList/dry druits/ic_walnut.png
+    - assets/images/categoryDetailList/festivals/ic_baisakhi.png
+    - assets/images/categoryDetailList/festivals/ic_budhajayanti.png
+    - assets/images/categoryDetailList/festivals/ic_christmas.png
+    - assets/images/categoryDetailList/festivals/ic_diwali.png
+    - assets/images/categoryDetailList/festivals/ic_durgapooja.png
+    - assets/images/categoryDetailList/festivals/ic_eid.png
+    - assets/images/categoryDetailList/festivals/ic_ganeshcharturthi.png
+    - assets/images/categoryDetailList/festivals/ic_gurunanakjayanti.png
+    - assets/images/categoryDetailList/festivals/ic_holi.png
+    - assets/images/categoryDetailList/festivals/ic_independence.png
+    - assets/images/categoryDetailList/festivals/ic_janmashtami.png
+    - assets/images/categoryDetailList/festivals/ic_mahasankranti.png
+    - assets/images/categoryDetailList/festivals/ic_mahashivratri.png
+    - assets/images/categoryDetailList/festivals/ic_onam.png
+    - assets/images/categoryDetailList/festivals/ic_rakshabandhan.png
+    - assets/images/categoryDetailList/festivals/ic_rathyatra.png
+    - assets/images/categoryDetailList/festivals/ic_republicday.png
+
 
   #   - images/a_dot_ham.jpeg
 

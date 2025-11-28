@@ -1,48 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../Home/Data/tap_set_data.dart';
 
 class Tapsetdetailsscreen extends StatefulWidget {
-  const Tapsetdetailsscreen({Key? key}) : super(key: key);
+  final String title;
+  final List<PuzzleItem> items;
+
+  const Tapsetdetailsscreen({
+    super.key,
+    required this.title,
+    required this.items,
+  });
 
   @override
   State<Tapsetdetailsscreen> createState() => _TapsetdetailsscreenState();
 }
 
-class Animal {
-  final String name;
-  final String imagePath;
-  final List<String> shuffledLetters;
-
-  Animal({
-    required this.name,
-    required this.imagePath,
-    required this.shuffledLetters,
-  });
-}
-
 class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   final FlutterTts tts = FlutterTts();
 
-  final List<Animal> animals = [
-    Animal(
-      name: 'BEAR',
-      imagePath: 'assets/images/categoryDetailList/animals/ic_bear.png',
-      shuffledLetters: ['D', 'A', 'R', 'Q', 'C', 'B', 'H', 'E', 'G', 'Y', 'A', 'L'],
-    ),
-    Animal(
-      name: 'ELEPHANT',
-      imagePath: 'assets/images/categoryDetailList/animals/ic_elephant.png',
-      shuffledLetters: ['E', 'L', 'P', 'H', 'A', 'N', 'T', 'X', 'E', 'R', 'K', 'M', 'S'],
-    ),
-    Animal(
-      name: 'LION',
-      imagePath: 'assets/images/categoryDetailList/animals/ic_lion.png',
-      shuffledLetters: ['L', 'I', 'O', 'N', 'B', 'T', 'R', 'A'],
-    ),
-  ];
-
-  int currentAnimalIndex = 0;
+  int currentIndex = 0;
   List<String?> answerBoxes = [];
   List<bool> usedLetters = [];
 
@@ -60,7 +38,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   }
 
   void _initializePuzzle() {
-    final currentAnimal = animals[currentAnimalIndex];
+    final currentAnimal = widget.items[currentIndex];
     answerBoxes = List.filled(currentAnimal.name.length, null);
     usedLetters = List.filled(currentAnimal.shuffledLetters.length, false);
   }
@@ -73,7 +51,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
     if (emptyIndex != -1) {
       setState(() {
         answerBoxes[emptyIndex] =
-        animals[currentAnimalIndex].shuffledLetters[index];
+        widget.items[currentIndex].shuffledLetters[index];
         usedLetters[index] = true;
       });
     }
@@ -84,7 +62,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
 
     final letter = answerBoxes[index];
     final letterIndex =
-    animals[currentAnimalIndex].shuffledLetters.indexOf(letter!);
+    widget.items[currentIndex].shuffledLetters.indexOf(letter!);
 
     setState(() {
       answerBoxes[index] = null;
@@ -93,11 +71,11 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   }
 
   void _playWord() {
-    tts.speak(animals[currentAnimalIndex].name);
+    tts.speak(widget.items[currentIndex].name);
   }
 
   Future<void> _playSpelling() async {
-    final word = animals[currentAnimalIndex].name;
+    final word = widget.items[currentIndex].name;
     for (var char in word.characters) {
       await tts.speak(char);
       await Future.delayed(const Duration(milliseconds: 900));
@@ -106,7 +84,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
 
   void _checkAnswer() {
     final userAnswer = answerBoxes.join();
-    final correctAnswer = animals[currentAnimalIndex].name;
+    final correctAnswer = widget.items[currentIndex].name;
 
     if (answerBoxes.every((e) => e == null)) {
       tts.speak("Try again");
@@ -135,13 +113,14 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
+      tts.speak("Incorrect! Try again!");
     }
   }
 
   void _nextAnimal() {
-    if (currentAnimalIndex < animals.length - 1) {
+    if (currentIndex < widget.items.length - 1) {
       setState(() {
-        currentAnimalIndex++;
+        currentIndex++;
         _initializePuzzle();
       });
     } else {
@@ -161,7 +140,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentAnimal = animals[currentAnimalIndex];
+    final currentAnimal = widget.items[currentIndex];
 
     return Scaffold(
       body: Container(
@@ -183,11 +162,11 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
                       icon: const Icon(Icons.arrow_back, size: 28),
                       onPressed: () => Navigator.pop(context),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Animals',
+                        '${widget.title}',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF6B4423),

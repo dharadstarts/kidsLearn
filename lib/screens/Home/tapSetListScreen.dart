@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learn/screens/Home/Models/category_item_model.dart';
-
 import 'TapSetDetailsScreen.dart';
+import '../Home/Data/tap_set_data.dart';
 
 class Tapsetlistscreen extends StatelessWidget {
   final String title;
@@ -10,18 +10,6 @@ class Tapsetlistscreen extends StatelessWidget {
     required this.title,
   });
 
-  final List<CategoryItem> fillItems = [
-    CategoryItem(label: 'Animals', imageAsset: 'assets/images/TapSet/ic_shape1.png'),
-    CategoryItem(label: 'Birds', imageAsset: 'assets/images/TapSet/ic_shape2.png'),
-    CategoryItem(label: 'Numbers', imageAsset: 'assets/images/TapSet/ic_shape3.png'),
-    CategoryItem(label: 'Colors', imageAsset: 'assets/images/TapSet/ic_shape4.png'),
-    CategoryItem(label: 'Sea animals', imageAsset: 'assets/images/TapSet/ic_shape5.png'),
-    CategoryItem(label: 'Dry Fruits', imageAsset: 'assets/images/TapSet/ic_shape6.png'),
-    CategoryItem(label: 'Festivals', imageAsset: 'assets/images/TapSet/ic_shape7.png'),
-    CategoryItem(label: 'Flowers', imageAsset: 'assets/images/TapSet/ic_shape8.png'),
-    CategoryItem(label: 'Fruits', imageAsset: 'assets/images/TapSet/ic_shape9.png'),
-    CategoryItem(label: 'Insects', imageAsset: 'assets/images/TapSet/ic_shape10.png'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +68,7 @@ class Tapsetlistscreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    itemCount: (fillItems.length / 2).ceil(),
+                    itemCount: (tapsetCategories.length / 2).ceil(),
                     itemBuilder: (context, index) {
                       int first = index * 2;
                       int second = first + 1;
@@ -92,8 +80,8 @@ class Tapsetlistscreen extends StatelessWidget {
                             /// LEFT ITEM
                             Expanded(
                               child: _gridItem(
-                                fillItems[first].label,
-                                fillItems[first].imageAsset,
+                                  tapsetCategories[first].title,
+                                  tapsetCategories[first].image,
                                   context
                               ),
                             ),
@@ -101,12 +89,12 @@ class Tapsetlistscreen extends StatelessWidget {
                             const SizedBox(width: 12), // spacing between left & right
 
                             /// RIGHT ITEM (if available)
-                            if (second < fillItems.length)
+                            if (second < tapsetCategories.length)
                               Expanded(
                                 child: _gridItem(
-                                  fillItems[second].label,
-                                  fillItems[second].imageAsset,
-                                  context
+                                    tapsetCategories[second].title,
+                                    tapsetCategories[second].image,
+                                    context
                                 ),
                               )
                             else
@@ -129,10 +117,17 @@ class Tapsetlistscreen extends StatelessWidget {
   Widget _gridItem(String title, String iconPath, BuildContext context) {
     return GestureDetector(
       onTap: () {
+        TapsetCategory selected = tapsetCategories.firstWhere(
+              (c) => c.title == title,
+        );
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Tapsetdetailsscreen(),
+            builder: (_) => Tapsetdetailsscreen(
+              title: selected.title,
+              items: selected.items,
+            ),
           ),
         );
       },

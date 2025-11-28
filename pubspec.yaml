@@ -357,6 +357,59 @@ flutter:
     - assets/images/categoryDetailList/festivals/ic_rakshabandhan.png
     - assets/images/categoryDetailList/festivals/ic_rathyatra.png
     - assets/images/categoryDetailList/festivals/ic_republicday.png
+    - assets/images/categoryDetailList/flowers/ic_archid.png
+    - assets/images/categoryDetailList/flowers/ic_asterflower.png
+    - assets/images/categoryDetailList/flowers/ic_dahila.png
+    - assets/images/categoryDetailList/flowers/ic_daisyflower.png
+    - assets/images/categoryDetailList/flowers/ic_hibiscus.png
+    - assets/images/categoryDetailList/flowers/ic_lotus.png
+    - assets/images/categoryDetailList/flowers/ic_mograflower.png
+    - assets/images/categoryDetailList/flowers/ic_narcissusflower.png
+    - assets/images/categoryDetailList/flowers/ic_rose.png
+    - assets/images/categoryDetailList/flowers/ic_sunflower.png
+    - assets/images/categoryDetailList/flowers/ic_tulip.png
+    - assets/images/categoryDetailList/fruits/ic_apple.png
+    - assets/images/categoryDetailList/fruits/ic_apricot.png
+    - assets/images/categoryDetailList/fruits/ic_banana.png
+    - assets/images/categoryDetailList/fruits/ic_blackberry.png
+    - assets/images/categoryDetailList/fruits/ic_cherry.png
+    - assets/images/categoryDetailList/fruits/ic_custardapple.png
+    - assets/images/categoryDetailList/fruits/ic_grapes.png
+    - assets/images/categoryDetailList/fruits/ic_guava.png
+    - assets/images/categoryDetailList/fruits/ic_jackfruit.png
+    - assets/images/categoryDetailList/fruits/ic_javaplum.png
+    - assets/images/categoryDetailList/fruits/ic_kiwi.png
+    - assets/images/categoryDetailList/fruits/ic_lemon.png
+    - assets/images/categoryDetailList/fruits/ic_mango.png
+    - assets/images/categoryDetailList/fruits/ic_muskmelon.png
+    - assets/images/categoryDetailList/fruits/ic_papaya.png
+    - assets/images/categoryDetailList/fruits/ic_peru.png
+    - assets/images/categoryDetailList/fruits/ic_pineapple.png
+    - assets/images/categoryDetailList/fruits/ic_plum.png
+    - assets/images/categoryDetailList/fruits/ic_pomegrante.png
+    - assets/images/categoryDetailList/fruits/ic_sapodila.png
+    - assets/images/categoryDetailList/fruits/ic_starwberry.png
+    - assets/images/categoryDetailList/fruits/ic_tamarind.png
+    - assets/images/categoryDetailList/fruits/ic_watermelon.png
+    - assets/images/categoryDetailList/insects/ic_ant.png
+    - assets/images/categoryDetailList/insects/ic_bee.png
+    - assets/images/categoryDetailList/insects/ic_butterfly.png
+    - assets/images/categoryDetailList/insects/ic_cockroach.png
+    - assets/images/categoryDetailList/insects/ic_earthworm.png
+    - assets/images/categoryDetailList/insects/ic_frog.png
+    - assets/images/categoryDetailList/insects/ic_ladybug.png
+    - assets/images/categoryDetailList/insects/ic_lizard.png
+    - assets/images/categoryDetailList/insects/ic_mosquito.png
+    - assets/images/categoryDetailList/insects/ic_scorpion.png
+    - assets/images/categoryDetailList/insects/ic_snake.png
+    - assets/images/categoryDetailList/insects/ic_spider.png
+    - assets/images/categoryDetailList/insects/ic_termite.png
+    - assets/images/Puzzle/ic_puzzle_pg.png
+    - assets/images/Puzzle/ic_puzzle.png
+    - assets/images/Maths/ic_card1.png
+    - assets/images/Maths/ic_card2.png
+    - assets/images/Maths/ic_math_bg.png
+    - assets/images/Maths/ic_number_bg.png
 
 
   #   - images/a_dot_ham.jpeg

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Home/MathsScreen.dart';
+import 'package:kids_learn/screens/Home/NumberPuzzleScreen.dart';
 import 'package:kids_learn/screens/Home/categoryDetailListScreen.dart';
 import 'package:kids_learn/screens/Home/tapSetListScreen.dart';
 import '../Models/category_model.dart';
@@ -32,6 +34,20 @@ class CategoryViewModel extends ChangeNotifier {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => Tapsetlistscreen(title: category.label),
+          ),
+        );
+        break;
+      case 'puzzle':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => NumberPuzzleScreen(),
+          ),
+        );
+        break;
+      case 'maths':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => MathsScreen(),
           ),
         );
         break;

@@ -124,10 +124,17 @@ class Tapsetlistscreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => Tapsetdetailsscreen(
-              title: selected.title,
-              items: selected.items,
-            ),
+            builder: (_) {
+              // Make a copy of the list and shuffle it
+              final shuffledItems = List<PuzzleItem>.from(
+                selected.items.cast<PuzzleItem>(),
+              )..shuffle();
+
+              return Tapsetdetailsscreen(
+                title: selected.title,
+                items: shuffledItems,
+              );
+            },
           ),
         );
       },

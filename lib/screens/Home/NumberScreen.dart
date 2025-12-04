@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../Home/NumberItemViewScreen.dart';
 
 class NumberScreen extends StatelessWidget {
-  final List<int> numbers = List.generate(74, (i) => i); // 0–73
+  final List<int> numbers = List.generate(76, (i) => i); // 0–75
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,13 @@ class NumberScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: const Icon(Icons.arrow_back, size: 28, color: Colors.brown),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, size: 28, color: Colors.brown),
+                      onPressed: () => Navigator.pop(context),
                     ),
                     const Spacer(),
                     const Text(
-                      "Number",
+                      "Numbers",
                       style: TextStyle(
                         color: Colors.brown,
                         fontSize: 24,
@@ -35,23 +36,27 @@ class NumberScreen extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
+                    const SizedBox(width: 48), // Balance the back button space
                   ],
                 ),
               ),
 
-              // ---------- GRID VIEW WITH 4 COLUMNS ----------
+              // ---------- GRID VIEW ----------
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: GridView.count(
-                    crossAxisCount: 4, // This ensures exactly 4 items per row
-                    crossAxisSpacing: 20, // horizontal spacing
-                    mainAxisSpacing: 20, // vertical spacing
-                    childAspectRatio: 1.0, // square items
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: 1.0,
+                    ),
                     padding: const EdgeInsets.all(8),
-                    children: numbers.map((num) {
-                      return _gridBox(num);
-                    }).toList(),
+                    itemCount: numbers.length,
+                    itemBuilder: (context, index) {
+                      return _gridBox(context, numbers[index]);
+                    },
                   ),
                 ),
               ),
@@ -62,17 +67,20 @@ class NumberScreen extends StatelessWidget {
     );
   }
 
-  // ==========================
-  //      GRID BOX WIDGET
-  // ==========================
-  Widget _gridBox(int number) {
+  Widget _gridBox(BuildContext context, int number) {
     return GestureDetector(
       onTap: () {
-        print("Tapped $number");
+        // Navigate to NumberItemViewScreen with the selected number
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NumberItemViewScreen(
+              initialNumber: number, // Changed parameter name for clarity
+            ),
+          ),
+        );
       },
       child: Container(
-        width: 45, // Reduced width
-        height: 45,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(147,110,76, 100),
           border: Border.all(
@@ -82,11 +90,18 @@ class NumberScreen extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          "$number",
+          number.toString(),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.w900,
+            shadows: [
+              Shadow(
+                color: Colors.black54,
+                blurRadius: 2,
+                offset: Offset(1, 1),
+              ),
+            ],
           ),
         ),
       ),

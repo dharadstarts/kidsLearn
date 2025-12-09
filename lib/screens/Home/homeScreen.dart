@@ -3,6 +3,8 @@ import '../Home/ViewModels/category_view_model.dart';
 import '../Home/Widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
+import 'SpellingsScreen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -97,18 +99,24 @@ class HomeScreen extends StatelessWidget {
                               // --- Spelling Banner ---
                               buildBanner(
                                 gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFFCA2631),
-                                      Color(0xFFd43d48),
-                                      Color(0xFFe85567),
-                                      Color(0xFFfc6d89),
-                                      Color(0xFFff7c99),
-                                      Color(0xFFfe85a1),
-                                    ]
+                                  colors: [
+                                    Color(0xFFCA2631),
+                                    Color(0xFFd43d48),
+                                    Color(0xFFe85567),
+                                    Color(0xFFfc6d89),
+                                    Color(0xFFff7c99),
+                                    Color(0xFFfe85a1),
+                                  ],
                                 ),
                                 title: "Spelling",
                                 subtitle: "Step-By-Step Spelling Adventure",
                                 leadingImagePath: 'assets/images/Home/ic_spelling.png',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (_) =>  SpellingsScreen()),
+                                  );
+                                },
                               ),
 
                               const SizedBox(height: 10),
@@ -149,77 +157,83 @@ class HomeScreen extends StatelessWidget {
     required Gradient gradient,
     required String title,
     required String subtitle,
-    String? leadingImagePath, // image on left
-    String? trailingImagePath, // image on right
+    String? leadingImagePath,
+    String? trailingImagePath,
+    VoidCallback? onTap,   // 👈 ADD THIS
   }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 22),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      decoration: BoxDecoration(
-        gradient: gradient,
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Row(
-        children: [
-          // --- Leading Image ---
-          if (leadingImagePath != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 14),
-              child: Image.asset(
-                leadingImagePath,
-                height: 55,
-                fit: BoxFit.contain,
+    return GestureDetector(
+      onTap: onTap,         // 👈 APPLY TAP ACTION
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 22),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Row(
+          children: [
+            if (leadingImagePath != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 14),
+                child: Image.asset(
+                  leadingImagePath,
+                  height: 55,
+                  fit: BoxFit.contain,
+                ),
+              ),
+
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Column(
+                  crossAxisAlignment: leadingImagePath != null
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Poppins',
+                        fontSize: 26,
+                        color: leadingImagePath != null
+                            ? const Color(0xFF5e3001)
+                            : Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: leadingImagePath != null
+                            ? const Color(0xFF5e3001)
+                            : Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
-          // --- Text Column ---
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0,right: 10.0),
-              child: Column(
-                crossAxisAlignment: leadingImagePath != null
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    textAlign:  TextAlign.right,
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontFamily: 'Poppins',
-                      fontSize: 26,
-                      color: leadingImagePath != null ? Color(0xFF5e3001) : Colors.white ,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    textAlign: leadingImagePath != null ? TextAlign.right : TextAlign.left,
-                    style:  TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: leadingImagePath != null ? Color(0xFF5e3001) : Colors.white,
-                    ),
-                  ),
-                ],
+            if (trailingImagePath != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 18),
+                child: Image.asset(
+                  trailingImagePath,
+                  height: 55,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-          ),
-
-          // --- Trailing Image ---
-          if (trailingImagePath != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 18),
-              child: Image.asset(
-                trailingImagePath,
-                height: 55,
-                fit: BoxFit.contain,
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
 }
 

@@ -107,7 +107,14 @@ class MathsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NumberScreen(isTableMode: true),
+                        ),
+                      );
+                    },
                     child: Container(
                       height: 90,
                       decoration: BoxDecoration(

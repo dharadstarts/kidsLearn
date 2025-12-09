@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import '../Home/NumberItemViewScreen.dart';
+import 'TableDetailScreen.dart';
 
 class NumberScreen extends StatelessWidget {
-  final List<int> numbers = List.generate(76, (i) => i); // 0–75
+  final bool isTableMode; // <-- FLAG FOR TABLE SCREEN
+
+  NumberScreen({super.key, this.isTableMode = false});
 
   @override
   Widget build(BuildContext context) {
+    final List<int> numbers =
+    isTableMode ? List.generate(20, (i) => i + 1) : List.generate(76, (i) => i);
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/Maths/ic_number_bg.png"),
+            image: AssetImage(
+              isTableMode
+                  ? "assets/images/Maths/ic_table_bg.png"    // <-- TABLE BACKGROUND
+                  : "assets/images/Maths/ic_number_bg.png", // NORMAL NUMBERS BACKGROUND
+            ),
             fit: BoxFit.cover,
           ),
         ),
@@ -27,16 +37,16 @@ class NumberScreen extends StatelessWidget {
                       onPressed: () => Navigator.pop(context),
                     ),
                     const Spacer(),
-                    const Text(
-                      "Numbers",
-                      style: TextStyle(
+                    Text(
+                      isTableMode ? "Tables" : "Numbers",
+                      style: const TextStyle(
                         color: Colors.brown,
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const Spacer(),
-                    const SizedBox(width: 48), // Balance the back button space
+                    const SizedBox(width: 48),
                   ],
                 ),
               ),
@@ -52,7 +62,6 @@ class NumberScreen extends StatelessWidget {
                       mainAxisSpacing: 20,
                       childAspectRatio: 1.0,
                     ),
-                    padding: const EdgeInsets.all(8),
                     itemCount: numbers.length,
                     itemBuilder: (context, index) {
                       return _gridBox(context, numbers[index]);
@@ -67,24 +76,33 @@ class NumberScreen extends StatelessWidget {
     );
   }
 
+  // ---------- EACH NUMBER TILE ----------
   Widget _gridBox(BuildContext context, int number) {
     return GestureDetector(
       onTap: () {
-        // Navigate to NumberItemViewScreen with the selected number
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NumberItemViewScreen(
-              initialNumber: number, // Changed parameter name for clarity
+        if (isTableMode) {
+          // OPEN TABLE SCREEN
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TableDetailScreen(initialTable: number),
             ),
-          ),
-        );
+          );
+        } else {
+          // OPEN NUMBER DETAIL SCREEN
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => NumberItemViewScreen(initialIndex: number),
+            ),
+          );
+        }
       },
       child: Container(
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(147,110,76, 100),
+          color: const Color.fromRGBO(147, 110, 76, 1),
           border: Border.all(
-            color: const Color.fromRGBO(202,158,126, 100),
+            color: const Color.fromRGBO(202, 158, 126, 1),
             width: 8,
           ),
         ),

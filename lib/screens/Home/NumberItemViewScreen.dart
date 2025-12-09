@@ -19,51 +19,85 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
   late FlutterTts flutterTts;
   bool isSpeaking = false;
 
-  // Simple number list (0–75)
-  final List<String> numbers = List.generate(76, (i) => i.toString());
+  final List<int> numbers = List.generate(76, (i) => i); // 0–75
 
   @override
   void initState() {
     super.initState();
-
     currentIndex = widget.initialIndex.clamp(0, numbers.length - 1);
-
     _initTts();
   }
 
   void _initTts() async {
     flutterTts = FlutterTts();
+
     await flutterTts.setLanguage("en-US");
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.setVolume(1.0);
+    await flutterTts.setPitch(1.0);
 
     flutterTts.setCompletionHandler(() {
+      setState(() => isSpeaking = false);
+    });
+
+    flutterTts.setErrorHandler((msg) {
       setState(() => isSpeaking = false);
     });
   }
 
   void goPrev() {
     if (currentIndex > 0) {
-      setState(() => currentIndex -= 1);
-      _speak();
+      setState(() => currentIndex--);
+      _speakWithPause();
     }
   }
 
   void goNext() {
     if (currentIndex < numbers.length - 1) {
-      setState(() => currentIndex += 1);
-      _speak();
+      setState(() => currentIndex++);
+      _speakWithPause();
     }
   }
 
-  void _speak() async {
-    if (isSpeaking) await flutterTts.stop();
+  /// Converts number to words
+  String spellNumber(int number) {
+    const ones = [
+      "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+      "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+      "Seventeen", "Eighteen", "Nineteen"
+    ];
+
+    const tens = [
+      "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy"
+    ];
+
+    if (number < 20) return ones[number];
+
+    if (number < 100) {
+      int t = number ~/ 10;
+      int r = number % 10;
+      return r == 0 ? tens[t] : "${tens[t]} ${ones[r]}";
+    }
+
+    return number.toString();
+  }
+
+  void _speakWithPause() async {
+    if (isSpeaking) {
+      await flutterTts.stop();
+    }
 
     setState(() => isSpeaking = true);
 
-    final text = numbers[currentIndex];
+    int number = numbers[currentIndex];
+    String word = spellNumber(number);
 
-    await flutterTts.speak(text);
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      await flutterTts.speak(word);
+    } catch (e) {
+      setState(() => isSpeaking = false);
+    }
   }
 
   @override
@@ -74,7 +108,8 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String currentNumber = numbers[currentIndex];
+    int number = numbers[currentIndex];
+    String word = spellNumber(number);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -82,8 +117,8 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back, color: Color(0xFF6E4D3F)),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(CupertinoIcons.back, color: const Color(0xFF6E4D3F)),
+          onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: const Text(
           "Numbers",
@@ -96,67 +131,89 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
       ),
       body: Stack(
         children: [
-          // Background
           Positioned.fill(
             child: Image.asset(
               'assets/images/categoryDetailList/ic_iteamBg.png',
               fit: BoxFit.fill,
             ),
           ),
-
           SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // BIG NUMBER
-                  Text(
-                    currentNumber,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 150,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black26,
-                          offset: Offset(4, 4),
-                          blurRadius: 6,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 40),
+
+                    /// BIG NUMBER
+                    Text(
+                      "$number",
+                      style: const TextStyle(
+                        fontSize: 120,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black26,
+                            offset: Offset(4, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 40),
+
+                    /// Spelling
+                    Text(
+                      word,
+                      style: const TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black26,
+                            offset: Offset(2, 3),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 50),
+
+                    /// Buttons (Prev - Speak - Next)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _OutlinedCircleButton(
+                          icon: Icons.arrow_back,
+                          onPressed: currentIndex > 0 ? goPrev : null,
+                        ),
+                        const SizedBox(width: 24),
+                        _FilledCircleButton(
+                          icon
+                              : isSpeaking ? Icons.stop : Icons.volume_up_rounded,
+                          onPressed: () {
+                            if (isSpeaking) {
+                              flutterTts.stop();
+                              setState(() => isSpeaking = false);
+                            } else {
+                              _speakWithPause();
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 24),
+                        _OutlinedCircleButton(
+                          icon: Icons.arrow_forward,
+                          onPressed:
+                          currentIndex < numbers.length - 1 ? goNext : null,
                         ),
                       ],
                     ),
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _OutlinedCircleButton(
-                        icon: Icons.arrow_back,
-                        onPressed: currentIndex > 0 ? goPrev : null,
-                      ),
-                      const SizedBox(width: 24),
-                      _FilledCircleButton(
-                        icon: isSpeaking ? Icons.stop : Icons.volume_up,
-                        onPressed: () {
-                          if (isSpeaking) {
-                            flutterTts.stop();
-                            setState(() => isSpeaking = false);
-                          } else {
-                            _speak();
-                          }
-                        },
-                      ),
-                      const SizedBox(width: 24),
-                      _OutlinedCircleButton(
-                        icon: Icons.arrow_forward,
-                        onPressed: currentIndex < numbers.length - 1 ? goNext : null,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -165,11 +222,9 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
   }
 }
 
-// Button Widgets
 class _OutlinedCircleButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
-
   const _OutlinedCircleButton({required this.icon, this.onPressed});
 
   @override
@@ -181,7 +236,7 @@ class _OutlinedCircleButton extends StatelessWidget {
         side: const BorderSide(color: Color(0xFF6E4D3F), width: 2),
         padding: const EdgeInsets.all(12),
       ),
-      child: Icon(icon, color: const Color(0xFF6E4D3F), size: 32),
+      child: Icon(icon, color: const Color(0xFF6E4D3F), size: 28),
     );
   }
 }
@@ -189,7 +244,6 @@ class _OutlinedCircleButton extends StatelessWidget {
 class _FilledCircleButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
-
   const _FilledCircleButton({required this.icon, this.onPressed});
 
   @override
@@ -199,10 +253,10 @@ class _FilledCircleButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(14),
         elevation: 4,
       ),
-      child: Icon(icon, size: 28),
+      child: Icon(icon, size: 26),
     );
   }
 }

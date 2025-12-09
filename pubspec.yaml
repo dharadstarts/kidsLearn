@@ -410,6 +410,14 @@ flutter:
     - assets/images/Maths/ic_card2.png
     - assets/images/Maths/ic_math_bg.png
     - assets/images/Maths/ic_number_bg.png
+    - assets/images/Maths/ic_table_bg.png
+    - assets/images/Maths/ic_table_detail_bg.png
+    - assets/images/Maths/ic_book.png
+    - assets/images/Maths/ic_flower.png
+    - assets/images/Maths/ic_pen.png
+    - assets/images/spellings/ic_spellings_bg.png
+    - assets/images/spellings/ic_abc.png
+    - assets/images/spellings/ic_words_bg.png
 
 
   #   - images/a_dot_ham.jpeg

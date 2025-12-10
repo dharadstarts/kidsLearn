@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Home/BabySleepScreen.dart';
 import 'package:kids_learn/screens/Home/MathsScreen.dart';
 import 'package:kids_learn/screens/Home/NumberPuzzleScreen.dart';
 import 'package:kids_learn/screens/Home/categoryDetailListScreen.dart';
@@ -48,6 +49,13 @@ class CategoryViewModel extends ChangeNotifier {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => MathsScreen(),
+          ),
+        );
+        break;
+      case 'babySleep':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => BabySleepScreen(),
           ),
         );
         break;

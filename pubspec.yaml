@@ -17,6 +17,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3  # or latest
   scribble: ^0.2.2
   fluttertoast: ^8.2.1
+  audioplayers: ^6.5.1
 
 
 dev_dependencies:
@@ -43,6 +44,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/audios/
     - assets/images/ic_splash1.png
     - assets/images/ic_logo.png
     - assets/images/Home/ic_home_bg.png
@@ -418,6 +420,37 @@ flutter:
     - assets/images/spellings/ic_spellings_bg.png
     - assets/images/spellings/ic_abc.png
     - assets/images/spellings/ic_words_bg.png
+    - assets/images/sleep/ic_bus.png
+    - assets/images/sleep/ic_car.png
+    - assets/images/sleep/ic_cat.png
+    - assets/images/sleep/ic_cloud.png
+    - assets/images/sleep/ic_fire.png
+    - assets/images/sleep/ic_hair_dryer.png
+    - assets/images/sleep/ic_heart.png
+    - assets/images/sleep/ic_moon.png
+    - assets/images/sleep/ic_plane.png
+    - assets/images/sleep/ic_radio.png
+    - assets/images/sleep/ic_shower.png
+    - assets/images/sleep/ic_table_fan.png
+    - assets/images/sleep/ic_train.png
+    - assets/images/sleep/ic_tree.png
+    - assets/images/sleep/ic_vaccum.png
+    - assets/images/sleep/ic_washing_machine.png
+    - assets/images/sleep/ic_watch.png
+    - assets/images/sleep/ic_water_wave.png
+    - assets/images/sleep/ic_waterfall.png
+    - assets/images/sleep/ic_wind.png
+    - assets/images/sleep/ic_sleep_bg.jpg
+    - assets/images/sleep/ic_cat.png
+    - assets/images/sleep/ic_dog.png
+    - assets/images/sleep/ic_elephant.png
+    - assets/images/sleep/ic_sparrow.png
+    - assets/images/sleep/ic_crow.png
+    - assets/images/sleep/ic_horse.png
+    - assets/images/sleep/ic_cow.png
+    - assets/images/ic_quiz.jpg
+
+
 
 
   #   - images/a_dot_ham.jpeg

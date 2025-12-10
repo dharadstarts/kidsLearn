@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Home/QuizScreen.dart';
 import '../Home/ViewModels/category_view_model.dart';
 import '../Home/Widgets/category_widget.dart';
 import 'package:provider/provider.dart';
@@ -135,6 +136,12 @@ class HomeScreen extends StatelessWidget {
                                 title: "Quiz",
                                 subtitle: "Fun Quizzes For Young Learners",
                                 trailingImagePath: 'assets/images/Home/ic_quiz.png',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (_) =>  QuizScreen()),
+                                  );
+                                },
                               ),
 
                               const SizedBox(height: 25),

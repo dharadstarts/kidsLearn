@@ -31,7 +31,7 @@ class _customLaunchScreenState extends State<customLaunchScreen>  with SingleTic
                 duration: Duration(seconds: 3),
                 curve: Curves.easeInOut,
                 child:   Image(
-                  image: AssetImage('assets/images/ic_splash1.png'),
+                  image: AssetImage('assets/images/ic_splash1.jpg'),
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -44,7 +44,7 @@ class _customLaunchScreenState extends State<customLaunchScreen>  with SingleTic
   }
 
   Future startTheAnimation() async {
-    await Future.delayed(Duration(milliseconds: 500), () {
+    await Future.delayed(Duration(milliseconds: 30), () {
       setState(() {
         animate = true;
       });

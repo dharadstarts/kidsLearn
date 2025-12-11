@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../AppTextStyles.dart';
+import '../ColorHelper.dart';
 import 'Data/category_details_list_data.dart';
 import 'Models/category_item_model.dart';
 import 'Widgets/LetterCategoryCard.dart';
@@ -84,17 +86,15 @@ class _stateCatergoyDetailListScreen
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              centerTitle: true,
               leading: IconButton(
-                icon: const Icon(CupertinoIcons.back,
-                    color: Color(0xFF6E4D3F)),
+                icon: Icon(Icons.arrow_back,
+                    color: ColorHelper.fromHex('#5d4434')),
                 onPressed: () => Navigator.of(context).maybePop(),
               ),
               title: Text(
                 widget.title,
-                style: const TextStyle(
-                  color: Color(0xFF6E4D3F),
-                  fontWeight: FontWeight.w700,
-                ),
+                  style: AppTextStyles.heading1.withSize(20),
               ),
             ),
             body: LayoutBuilder(
@@ -103,9 +103,9 @@ class _stateCatergoyDetailListScreen
                   children: [
                     // Background
                     Positioned.fill(
-                      child: Image.asset(
-                        'assets/images/categoryDetailList/ic_categoryItembg.png',
-                        fit: BoxFit.cover,
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child: Image.asset('assets/images/categoryDetailList/ic_categoryItembg.png'),
                       ),
                     ),
 

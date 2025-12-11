@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:kids_learn/screens/ColorHelper.dart';
 import 'package:scribble/scribble.dart';
 
 class LetterDrawingScreen extends StatefulWidget {
@@ -166,15 +167,8 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(CupertinoIcons.back, color: Color(0xFF6E4D3F)),
+          icon: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
           onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          'Draw ${widget.letter}',
-          style: const TextStyle(
-            color: Color(0xFF6E4D3F),
-            fontWeight: FontWeight.w700,
-          ),
         ),
         centerTitle: true,
       ),
@@ -182,9 +176,9 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
         children: [
           /// Background
           Positioned.fill(
-            child: Image.asset(
-              "assets/images/drawing/ic_latter_draw_bg.png",
+            child: FittedBox(
               fit: BoxFit.fill,
+              child: Image.asset('assets/images/drawing/ic_latter_draw_bg.png'),
             ),
           ),
 

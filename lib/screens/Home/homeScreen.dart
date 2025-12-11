@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:kids_learn/screens/AppTextStyles.dart';
+import 'package:kids_learn/screens/ColorHelper.dart';
 import 'package:kids_learn/screens/Home/QuizScreen.dart';
 import '../Home/ViewModels/category_view_model.dart';
 import '../Home/Widgets/category_widget.dart';
@@ -8,6 +11,18 @@ import 'SpellingsScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  String getGreetingMessage() {
+    final hour = DateTime.now().hour;
+
+    if (hour >= 5 && hour < 12) {
+      return "Good Morning!";
+    } else if (hour >= 12 && hour < 17) {
+      return "Good Afternoon!";
+    } else {
+      return "Good Evening!";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +34,12 @@ class HomeScreen extends StatelessWidget {
             drawer: const Drawer(),
             body: Stack(
               children: [
-                // ✅ Keep full-screen background
                 Positioned.fill(
                   child: Image.asset(
                     'assets/images/Home/ic_home_bg.png',
                     fit: BoxFit.fill,
                   ),
                 ),
-
-                // ✅ Main scrollable content
                 SafeArea(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
@@ -44,32 +56,17 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               // --- Header ---
                               Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 10),
                                 child: Row(
                                   children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.menu,
-                                        size: 28,
-                                        color: Colors.brown,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Text(
-                                      "Good afternoon!",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Poppins',
-                                        fontSize: 22,
-                                        color: Colors.brown,
-                                      ),
+                                    Text(
+                                      getGreetingMessage(),
+                                      style: AppTextStyles.heading1
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 60),
+                              const SizedBox(height: 30),
 
                               // --- Categories ---
                               Padding(
@@ -172,7 +169,7 @@ class HomeScreen extends StatelessWidget {
       onTap: onTap,         // 👈 APPLY TAP ACTION
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 22),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           gradient: gradient,
           borderRadius: BorderRadius.circular(40),
@@ -180,13 +177,10 @@ class HomeScreen extends StatelessWidget {
         child: Row(
           children: [
             if (leadingImagePath != null)
-              Padding(
-                padding: const EdgeInsets.only(right: 14),
-                child: Image.asset(
-                  leadingImagePath,
-                  height: 55,
-                  fit: BoxFit.contain,
-                ),
+              Image.asset(
+                leadingImagePath,
+                height: 55,
+                fit: BoxFit.contain,
               ),
 
             Expanded(
@@ -200,27 +194,13 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       title,
                       textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Poppins',
-                        fontSize: 26,
-                        color: leadingImagePath != null
-                            ? const Color(0xFF5e3001)
-                            : Colors.white,
-                      ),
+                      style: leadingImagePath != null ? AppTextStyles.heading1.withColor(ColorHelper.fromHex('#5e3001')).withSize(16).withWeight(FontWeight.normal) : AppTextStyles.heading1.withColor(Colors.white).withSize(16).withWeight(FontWeight.normal)
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                        color: leadingImagePath != null
-                            ? const Color(0xFF5e3001)
-                            : Colors.white,
-                      ),
+                      textAlign: leadingImagePath != null ? TextAlign.right : TextAlign.left,
+                      style:leadingImagePath != null ?  AppTextStyles.custom(fontSize: 12) : AppTextStyles.custom(fontSize: 12).withColor(Colors.white)
                     ),
                   ],
                 ),
@@ -228,13 +208,10 @@ class HomeScreen extends StatelessWidget {
             ),
 
             if (trailingImagePath != null)
-              Padding(
-                padding: const EdgeInsets.only(left: 18),
-                child: Image.asset(
-                  trailingImagePath,
-                  height: 55,
-                  fit: BoxFit.contain,
-                ),
+              Image.asset(
+                trailingImagePath,
+                height: 55,
+                fit: BoxFit.contain,
               ),
           ],
         ),

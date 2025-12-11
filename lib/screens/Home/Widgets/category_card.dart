@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/AppTextStyles.dart';
+import 'package:kids_learn/screens/ColorHelper.dart';
 import '../Models/category_model.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -33,7 +35,7 @@ class CategoryCard extends StatelessWidget {
               bottom: 0,
               child: Container(
                 width: width,
-                height: cardHeight * 0.98,
+                height: cardHeight * 0.75,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(arrCategoryList.bgImagePath),
@@ -46,7 +48,7 @@ class CategoryCard extends StatelessWidget {
             // ✅ Center image (only if path is not empty or null)
             if (arrCategoryList.centerImagePath.isNotEmpty)
               Positioned(
-                top: -10.0,
+                top: 8,
                 child: SizedBox(
                   width: arrCategoryList.label.isEmpty ? width * 0.70 : width * 0.55,
                   height: arrCategoryList.label.isEmpty ? width * 0.70 : width * 0.55,
@@ -59,7 +61,7 @@ class CategoryCard extends StatelessWidget {
 
             // ✅ Text inside background
             Positioned(
-              bottom: 49,
+              bottom: 40,
               left: 0,
               right: 0,
               child: Center(
@@ -73,11 +75,7 @@ class CategoryCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                      fontFamily: 'Poppins',
+                    style: AppTextStyles.custom(fontSize: 14,fontWeight: FontWeight.normal).withColor(ColorHelper.fromHex('#1e1e1e')
                     ),
                   ),
                 ),

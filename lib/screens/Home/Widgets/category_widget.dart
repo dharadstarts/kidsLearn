@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/AppTextStyles.dart';
 import '../Models/category_model.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -21,7 +22,7 @@ class CategoryWidget extends StatelessWidget {
       onTap: () => onTap?.call(index),
       child: SizedBox(
         width: width, // Can pass dynamically
-        height: 100,
+        height: 95,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -32,7 +33,7 @@ class CategoryWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: [-25.0, -20.0, -15.0, -25.0, -15.0, -15.0][index % 6],
+              top: [-25.0, -20.0, -15.0, -25.0, -15.0, -18.0][index % 6],
               left: 0,
               right: 0,
               child: Center(
@@ -51,11 +52,7 @@ class CategoryWidget extends StatelessWidget {
                 child: Text(
                   category.label,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
+                  style: AppTextStyles.title
                 ),
               ),
             ),

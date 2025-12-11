@@ -117,7 +117,7 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(CupertinoIcons.back, color: const Color(0xFF6E4D3F)),
+          icon: Icon(Icons.arrow_back, color: const Color(0xFF6E4D3F)),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: const Text(
@@ -186,28 +186,35 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _OutlinedCircleButton(
-                          icon: Icons.arrow_back,
-                          onPressed: currentIndex > 0 ? goPrev : null,
+                        GestureDetector(
+                          onTap: currentIndex > 0 ? goPrev : null,
+                          child: Image.asset('assets/ic_left_arrow.png',width: 30,height: 30),
                         ),
                         const SizedBox(width: 24),
-                        _FilledCircleButton(
-                          icon
-                              : isSpeaking ? Icons.stop : Icons.volume_up_rounded,
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             if (isSpeaking) {
                               flutterTts.stop();
-                              setState(() => isSpeaking = false);
+                              setState(() {
+                                isSpeaking = false;
+                              });
                             } else {
                               _speakWithPause();
                             }
                           },
+                          child:Image.asset( 'assets/ic_refersh.png',
+                            width: 30,
+                            height: 30,
+                          ),
                         ),
                         const SizedBox(width: 24),
-                        _OutlinedCircleButton(
-                          icon: Icons.arrow_forward,
-                          onPressed:
-                          currentIndex < numbers.length - 1 ? goNext : null,
+                        GestureDetector(
+                          onTap: currentIndex < numbers.length - 1 ? goNext : null,
+                          child: Image.asset(
+                            'assets/ic_right_arrow.png',
+                            width: 30,
+                            height: 30,
+                          ),
                         ),
                       ],
                     ),

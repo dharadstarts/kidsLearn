@@ -45,7 +45,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/audios/
-    - assets/images/ic_splash1.png
+    - assets/images/ic_christmas_splsh.jpg
+    - assets/images/ic_splash1.jpg
     - assets/images/ic_logo.png
     - assets/images/Home/ic_home_bg.png
     - assets/images/Home/ic_category1.png
@@ -449,10 +450,10 @@ flutter:
     - assets/images/sleep/ic_horse.png
     - assets/images/sleep/ic_cow.png
     - assets/images/ic_quiz.jpg
-
-
-
-
+    - assets/ic_left_arrow.png
+    - assets/ic_refersh.png
+    - assets/ic_right_arrow.png
+    - assets/ic_pause.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

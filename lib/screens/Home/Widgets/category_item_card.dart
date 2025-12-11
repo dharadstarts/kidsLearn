@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/AppTextStyles.dart';
 import '../Models/category_item_model.dart';
 
 class CategoryItemCard extends StatelessWidget {
@@ -69,12 +70,7 @@ class CategoryItemCard extends StatelessWidget {
                       maxLines: 2,          // ✔ Wrap into next line
                       overflow: TextOverflow.visible,
                       softWrap: true,       // ✔ Ensure wrapping
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontFamily: 'Poppins',
-                      ),
+                      style: AppTextStyles.title.withColor(Colors.white).withWeight(FontWeight.normal)
                     ),
                   ),
                 ),

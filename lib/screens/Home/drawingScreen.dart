@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../AppTextStyles.dart';
+import '../ColorHelper.dart';
 import 'Models/category_item_model.dart';
 import 'categoryDetailListScreen.dart';
 
@@ -58,9 +60,9 @@ class DrawingScreen extends StatelessWidget {
         children: [
           // ✅ Full screen background
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/drawing/ic_draw_bg.png',
-              fit: BoxFit.cover,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: Image.asset('assets/images/drawing/ic_draw_bg.png'),
             ),
           ),
 
@@ -80,23 +82,14 @@ class DrawingScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            size: 30,
-                            color: Color(0xff6c4e32),
-                          ),
+                          child: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
                         ),
                         const Spacer(),
                         const Text(
                           "Drawing",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff6c4e32),
-                          ),
+                          style: AppTextStyles.heading1,
                         ),
                         const Spacer(),
-                        Opacity(opacity: 0, child: Icon(Icons.arrow_back)),
                       ],
                     ),
                   ),
@@ -110,8 +103,8 @@ class DrawingScreen extends StatelessWidget {
                   sliver: SliverGrid(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 28,
+                      mainAxisSpacing: 30,
                     ),
                     delegate: SliverChildListDelegate([
                       _menuCard(

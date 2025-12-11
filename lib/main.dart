@@ -1,41 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/Auth/ChristmasLaunchScreen.dart';
 import 'package:kids_learn/screens/Auth/customLaunchScreen.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home:customLaunchScreen()) ,
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: _getLaunchScreen(),
+    ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+Widget _getLaunchScreen() {
+  final DateTime now = DateTime.now();
+  final DateTime expiryDate = DateTime(2026, 1, 1); // January 1, 2026
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Kids Learn',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(), // This shows AFTER splash screen
-    );
+  // Show Christmas screen only if date is before Jan 1, 2026
+  if (now.isBefore(expiryDate)) {
+    return ChristmasLaunchScreen();
+  } else {
+    return customLaunchScreen();
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kids Learn'),
-      ),
-      body: const Center(
-        child: Text('Welcome to Kids Learn!'),
-      ),
-    );
-  }
-}

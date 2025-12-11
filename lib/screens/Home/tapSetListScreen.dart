@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learn/screens/Home/Models/category_item_model.dart';
+import '../AppTextStyles.dart';
+import '../ColorHelper.dart';
 import 'TapSetDetailsScreen.dart';
 import '../Home/Data/tap_set_data.dart';
 
@@ -39,11 +41,7 @@ class Tapsetlistscreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             title,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF6E4D3F),
-                            ),
+                            style: AppTextStyles.heading1
                           ),
                         ),
                       ),
@@ -55,8 +53,7 @@ class Tapsetlistscreen extends StatelessWidget {
                           onTap: () => Navigator.pop(context),
                           child: Container(
                             padding: const EdgeInsets.all(4),
-                            child: const Icon(Icons.arrow_back,
-                                color: Color(0xFF6E4D3F), size: 28),
+                            child: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
                           ),
                         ),
                       ),
@@ -66,7 +63,7 @@ class Tapsetlistscreen extends StatelessWidget {
 
                 /// 🔹 Grid view taking remaining space
                 Expanded(
-                  child: ListView.builder(
+                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     itemCount: (tapsetCategories.length / 2).ceil(),
                     itemBuilder: (context, index) {

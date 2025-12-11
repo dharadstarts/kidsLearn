@@ -67,14 +67,6 @@ class CategoryViewModel extends ChangeNotifier {
           ),
         );
         break;
-    // Add more cases for other screen types as you create them
-    // case 'tapSet':
-    //   Navigator.of(context).push(
-    //     MaterialPageRoute(
-    //       builder: (_) => TapSetScreen(),
-    //     ),
-    //   );
-    //   break;
     }
   }
   void onSubCategoryTapped(BuildContext context, int index) {

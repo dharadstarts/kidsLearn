@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../AppTextStyles.dart';
+import '../ColorHelper.dart';
 import 'Models/category_item_model.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -30,10 +32,22 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
   void initState() {
     super.initState();
     currentIndex = widget.initialIndex.clamp(0, widget.items.length - 1);
-    _initTts();
+
+    // Initialize TTS and then speak
+    _initTts  ().then((_) {
+      // Wait for the next frame to ensure UI is built
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          // Small delay for better UX
+          Future.delayed(const Duration(milliseconds: 300), () {
+            _speakCurrentItem();
+          });
+        }
+      });
+    });
   }
 
-  void _initTts() async {
+  Future<void> _initTts() async {
     flutterTts = FlutterTts();
 
     // Configure TTS for both Android and iOS
@@ -44,15 +58,19 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
 
     // Set completion handler
     flutterTts.setCompletionHandler(() {
-      setState(() {
-        isSpeaking = false;
-      });
+      if (mounted) {
+        setState(() {
+          isSpeaking = false;
+        });
+      }
     });
 
     flutterTts.setErrorHandler((msg) {
-      setState(() {
-        isSpeaking = false;
-      });
+      if (mounted) {
+        setState(() {
+          isSpeaking = false;
+        });
+      }
     });
   }
 
@@ -151,15 +169,12 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(CupertinoIcons.back, color: const Color(0xFF6E4D3F)),
+          icon: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: Text(
           widget.title,
-          style: const TextStyle(
-            color: Color(0xFF6E4D3F),
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTextStyles.heading1.withSize(20),
         ),
         centerTitle: true,
       ),
@@ -187,8 +202,8 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                           bigLetter,
                           style: const TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 120,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 140,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black,
                             shadows: [
                               Shadow(
@@ -199,7 +214,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                             ],
                           ),
                         )
-                            : const SizedBox(height: 85),
+                            : const SizedBox(height: 75),
                         const SizedBox(height: 2),
                         // Image with soft drop shadow
                         Container(
@@ -221,32 +236,19 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                         Text(
                           current.label,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 36,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black26,
-                                offset: Offset(2, 3),
-                                blurRadius: 4,
-                              ),
-                            ],
-                          ),
+                          style: AppTextStyles.title.withSize(38).withWeight(FontWeight.bold),
                         ),
                         SizedBox(height: shouldShowBigLetter ? 16 : 45),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _OutlinedCircleButton(
-                              icon: Icons.arrow_back,
-                              onPressed: currentIndex > 0 ? goPrev : null,
+                            GestureDetector(
+                              onTap: currentIndex > 0 ? goPrev : null,
+                              child: Image.asset('assets/ic_left_arrow.png',width: 30,height: 30),
                             ),
                             const SizedBox(width: 24),
-                            _FilledCircleButton(
-                              icon: isSpeaking ? Icons.stop : Icons.refresh_sharp,
-                              onPressed: () {
+                            GestureDetector(
+                              onTap: () {
                                 if (isSpeaking) {
                                   flutterTts.stop();
                                   setState(() {
@@ -256,12 +258,20 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                                   _speakWithPause();
                                 }
                               },
+                              child:Image.asset( 'assets/ic_refersh.png',
+                                width: 30,
+                                height: 30,
+                              ),
                             ),
-                            const SizedBox(width: 24),
-                            _OutlinedCircleButton(
-                              icon: Icons.arrow_forward,
-                              onPressed: currentIndex < widget.items.length - 1 ? goNext : null,
-                            ),
+                             SizedBox(width: 24),
+                            GestureDetector(
+                              onTap: currentIndex < widget.items.length - 1 ? goNext : null,
+                              child: Image.asset(
+                                'assets/ic_right_arrow.png',
+                                width: 30,
+                                height: 30,
+                              ),
+                            )
                           ],
                         ),
                       ],

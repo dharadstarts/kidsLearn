@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kids_learn/screens/AppTextStyles.dart';
+import 'package:kids_learn/screens/ColorHelper.dart';
 import '../Models/category_item_model.dart';
 
 class LetterCategoryCard extends StatelessWidget {
@@ -39,19 +41,15 @@ class LetterCategoryCard extends StatelessWidget {
               child: Center(
                 child: categoriesDetailList.label.isNotEmpty
                     ? Text(
-                  categoriesDetailList.label,
-                  style: TextStyle(
-                    fontSize: size * 0.75,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF5A371A),
-                  ),
+                    categoriesDetailList.label,
+                    style: AppTextStyles.title.withColor(ColorHelper.fromHex('#5e3001')).withSize(size * 0.75)
                 )
                     : Image.asset(
-                                      categoriesDetailList.imageAsset,
-                                      width: size * 0.6,
-                                      height: size * 0.6,
-                                      fit: BoxFit.contain,
-                                    ),
+                  categoriesDetailList.imageAsset,
+                  width: size * 0.6,
+                  height: size * 0.6,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class NumberItemViewScreen extends StatefulWidget {
@@ -188,7 +189,11 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
                       children: [
                         GestureDetector(
                           onTap: currentIndex > 0 ? goPrev : null,
-                          child: Image.asset('assets/ic_left_arrow.png',width: 30,height: 30),
+                          child: SvgPicture.asset(
+                            'assets/images/ic_back.svg',
+                            width: 30,
+                            height: 30,
+                          ),
                         ),
                         const SizedBox(width: 24),
                         GestureDetector(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kids_learn/screens/AppTextStyles.dart';
 import 'package:kids_learn/screens/ColorHelper.dart';
 import 'Data/category_list_data.dart';
@@ -28,7 +29,11 @@ class _stateCategoryList extends State<categoryListScreen> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
+                    icon: SvgPicture.asset(
+                      'assets/images/ic_back.svg',
+                      width: 30,
+                      height: 30,
+                    ),
                     onPressed: () => Navigator.of(context).maybePop(),
                   ),
                   title: Text(

@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:kids_learn/screens/Auth/ChristmasLaunchScreen.dart';
 import 'package:kids_learn/screens/Auth/customLaunchScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:kids_learn/screens/SoundManager/SoundProvider.dart'; // Create this file
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Configure audio for better performance
+  AudioPlayer.global.setAudioContext(
+     AudioContext(
+      android: AudioContextAndroid(
+        contentType: AndroidContentType.music,
+        usageType: AndroidUsageType.media,
+        audioFocus: AndroidAudioFocus.gain,
+      ),
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.playback,
+        options: {AVAudioSessionOptions.mixWithOthers},
+      ),
+    ),
+  );
+
+
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: _getLaunchScreen(),
+    ChangeNotifierProvider(
+      create: (context) => SoundProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: _getLaunchScreen(),
+      ),
     ),
   );
 }
@@ -19,7 +43,6 @@ Widget _getLaunchScreen() {
   if (now.isBefore(expiryDate)) {
     return ChristmasLaunchScreen();
   } else {
-    return customLaunchScreen();
+    return const customLaunchScreen();
   }
 }
-

@@ -58,8 +58,15 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
   @override
   void initState() {
     super.initState();
+
     tableNumber = widget.initialTable.clamp(1, 20);
     _refreshRandoms();
+
+    // 🔥 Auto-start speaking after UI builds
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      isSpeaking = true;
+      await speakTable();
+    });
   }
 
   @override
@@ -105,7 +112,7 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
     for (String line in lines) {
       if (!isSpeaking) break;   // stop immediately if refresh pressed
       await flutterTts.speak(line);
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 2));
     }
 
   }

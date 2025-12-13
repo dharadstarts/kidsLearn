@@ -18,6 +18,7 @@ dependencies:
   scribble: ^0.2.2
   fluttertoast: ^8.2.1
   audioplayers: ^6.5.1
+  flutter_svg: ^2.0.9
 
 
 dev_dependencies:
@@ -450,10 +451,12 @@ flutter:
     - assets/images/sleep/ic_horse.png
     - assets/images/sleep/ic_cow.png
     - assets/images/ic_quiz.jpg
-    - assets/ic_left_arrow.png
-    - assets/ic_refersh.png
-    - assets/ic_right_arrow.png
-    - assets/ic_pause.png
+    - assets/images/Home/ic_sound.png
+    - assets/images/Home/ic_sound_off.png
+    - assets/images/ic_back.svg
+    - assets/images/ic_play.svg
+    - assets/images/ic_refersh.svg
+    - assets/images/ic_right_arrow.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

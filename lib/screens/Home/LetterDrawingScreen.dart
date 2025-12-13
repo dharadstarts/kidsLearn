@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kids_learn/screens/ColorHelper.dart';
 import 'package:scribble/scribble.dart';
 
@@ -167,7 +168,11 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
+          icon: SvgPicture.asset(
+                            'assets/images/ic_back.svg',
+                            width: 30,
+                            height: 30,
+                          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,

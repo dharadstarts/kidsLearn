@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:kids_learn/screens/AppTextStyles.dart';
-import 'package:kids_learn/screens/ColorHelper.dart';
 import 'package:kids_learn/screens/Home/QuizScreen.dart';
 import '../Home/ViewModels/category_view_model.dart';
 import '../Home/Widgets/category_widget.dart';
 import 'package:provider/provider.dart';
-
 import 'SpellingsScreen.dart';
+import '../SoundManager/SoundProvider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isSoundOn = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final soundProvider = Provider.of<SoundProvider>(context, listen: false);
+      if (soundProvider.isSoundOn && !soundProvider.isBackgroundPlaying) {
+        soundProvider.playBackgroundMusic();
+      }
+    });
+  }
 
   String getGreetingMessage() {
     final hour = DateTime.now().hour;
@@ -26,6 +42,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final soundProvider = Provider.of<SoundProvider>(context);
     return ChangeNotifierProvider(
       create: (_) => CategoryViewModel(),
       child: Consumer<CategoryViewModel>(
@@ -54,24 +71,39 @@ class HomeScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // --- Header ---
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 10),
-                                child: Row(
-                                  children: [
-                                    Text(
+                              // --- Top Row with Greeting & Sound Button ---
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 22.0),
+                                    child: Text(
                                       getGreetingMessage(),
-                                      style: AppTextStyles.heading1
+                                      style: AppTextStyles.heading1,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  IconButton(
+                                    icon: Image.asset(
+                                      soundProvider.isSoundOn // Use soundProvider's state
+                                          ? 'assets/images/Home/ic_sound.png'
+                                          : 'assets/images/Home/ic_sound_off.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    onPressed: () {
+                                      soundProvider.toggleSound(); // This will now work
+                                    },
+                                  ),
+
+                                ],
                               ),
-                              const SizedBox(height: 30),
+
+                              const SizedBox(height: 20),
 
                               // --- Categories ---
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Wrap(
                                   alignment: WrapAlignment.spaceEvenly,
                                   spacing: 16,
@@ -79,13 +111,13 @@ class HomeScreen extends StatelessWidget {
                                   children: List.generate(
                                     viewModel.categoryList.length,
                                         (index) {
-                                      final category = viewModel
-                                          .categoryList[index];
+                                      final category = viewModel.categoryList[index];
                                       return CategoryWidget(
                                         index: index,
                                         category: category,
                                         width: boxWidth,
-                                        onTap: (i) => viewModel.onCategoryTapped(context, i),
+                                        onTap: (i) =>
+                                            viewModel.onCategoryTapped(context, i),
                                       );
                                     },
                                   ),
@@ -106,13 +138,15 @@ class HomeScreen extends StatelessWidget {
                                     Color(0xFFfe85a1),
                                   ],
                                 ),
-                                title: "Spelling",
-                                subtitle: "Step-By-Step Spelling Adventure",
-                                leadingImagePath: 'assets/images/Home/ic_spelling.png',
+                                title: "Fun With Spellings",
+                                subtitle: "Simple spelling practice for smart kids!",
+                                leadingImagePath:
+                                'assets/images/Home/ic_spelling.png',
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (_) =>  SpellingsScreen()),
+                                    MaterialPageRoute(
+                                        builder: (_) => SpellingsScreen()),
                                   );
                                 },
                               ),
@@ -122,21 +156,23 @@ class HomeScreen extends StatelessWidget {
                               // --- Quiz Banner ---
                               buildBanner(
                                 gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFF44631D),
-                                      Color(0xFF497c04),
-                                      Color(0xFF85a424),
-                                      Color(0xFFa8b73d),
-                                      Color(0xFFc0c44d),
-                                      Color(0xFFd6d157)
-                                    ]),
-                                title: "Quiz",
-                                subtitle: "Fun Quizzes For Young Learners",
-                                trailingImagePath: 'assets/images/Home/ic_quiz.png',
+                                  colors: [
+                                    Color(0xFF44631D),
+                                    Color(0xFF497c04),
+                                    Color(0xFF85a424),
+                                    Color(0xFFa8b73d),
+                                    Color(0xFFc0c44d),
+                                    Color(0xFFd6d157)
+                                  ],
+                                ),
+                                title: "Fun Brain Quiz",
+                                subtitle: "Catch the clues and boost your brain power!",
+                                trailingImagePath:
+                                'assets/images/Home/ic_quiz.png',
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (_) =>  QuizScreen()),
+                                    MaterialPageRoute(builder: (_) => QuizScreen()),
                                   );
                                 },
                               ),
@@ -156,17 +192,18 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  // ---  UI Banner---
+
+  // --- UI Banner---
   Widget buildBanner({
     required Gradient gradient,
     required String title,
     required String subtitle,
     String? leadingImagePath,
     String? trailingImagePath,
-    VoidCallback? onTap,   // 👈 ADD THIS
+    VoidCallback? onTap,
   }) {
     return GestureDetector(
-      onTap: onTap,         // 👈 APPLY TAP ACTION
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 22),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -182,7 +219,6 @@ class HomeScreen extends StatelessWidget {
                 height: 55,
                 fit: BoxFit.contain,
               ),
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -194,19 +230,28 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       title,
                       textAlign: TextAlign.right,
-                      style: leadingImagePath != null ? AppTextStyles.heading1.withColor(ColorHelper.fromHex('#5e3001')).withSize(16).withWeight(FontWeight.normal) : AppTextStyles.heading1.withColor(Colors.white).withSize(16).withWeight(FontWeight.normal)
+                      style: leadingImagePath != null
+                          ? AppTextStyles.heading1.withColor(Colors.white)
+                          .withSize(17)
+                          .withWeight(FontWeight.bold)
+                          : AppTextStyles.heading1
+                          .withColor(Colors.white)
+                          .withSize(17)
+                          .withWeight(FontWeight.bold),
                     ),
-                    const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      textAlign: leadingImagePath != null ? TextAlign.right : TextAlign.left,
-                      style:leadingImagePath != null ?  AppTextStyles.custom(fontSize: 12) : AppTextStyles.custom(fontSize: 12).withColor(Colors.white)
+                      textAlign:
+                      leadingImagePath != null ? TextAlign.right : TextAlign.left,
+                      style: leadingImagePath != null
+                          ? AppTextStyles.custom(fontSize: 13).withWeight(FontWeight.w500).withColor(Colors.white)
+                          : AppTextStyles.custom(fontSize: 13).withWeight(FontWeight.w500)
+                          .withColor(Colors.white),
                     ),
                   ],
                 ),
               ),
             ),
-
             if (trailingImagePath != null)
               Image.asset(
                 trailingImagePath,
@@ -218,6 +263,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 }
-

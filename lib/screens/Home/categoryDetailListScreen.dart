@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../AppTextStyles.dart';
 import '../ColorHelper.dart';
@@ -88,9 +90,16 @@ class _stateCatergoyDetailListScreen
               elevation: 0,
               centerTitle: true,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back,
-                    color: ColorHelper.fromHex('#5d4434')),
-                onPressed: () => Navigator.of(context).maybePop(),
+                icon: SvgPicture.asset(
+                  'assets/images/ic_back.svg',
+                  width: 35,
+                  height: 35,
+                ),
+                onPressed: () {
+                  HapticFeedback.heavyImpact();
+                  HapticFeedback.vibrate();// 👈 haptic feedback
+                  Navigator.of(context).maybePop();
+                },
               ),
               title: Text(
                 widget.title,

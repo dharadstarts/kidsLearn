@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import '../AppTextStyles.dart';
 import '../ColorHelper.dart';
 import 'Models/category_item_model.dart';
@@ -75,6 +77,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
   }
 
   void goPrev() {
+    HapticFeedback.heavyImpact();
     if (currentIndex > 0) {
       setState(() {
         currentIndex -= 1;
@@ -84,6 +87,7 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
   }
 
   void goNext() {
+    HapticFeedback.heavyImpact();
     if (currentIndex < widget.items.length - 1) {
       setState(() {
         currentIndex += 1;
@@ -169,8 +173,15 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
-          onPressed: () => Navigator.of(context).maybePop(),
+          icon: SvgPicture.asset(
+            'assets/images/ic_back.svg',
+            width: 35,
+            height: 35,
+          ),
+          onPressed: () {
+            HapticFeedback.heavyImpact(); // 👈 haptic feedback
+            Navigator.of(context).maybePop();
+          },
         ),
         title: Text(
           widget.title,
@@ -244,7 +255,14 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                           children: [
                             GestureDetector(
                               onTap: currentIndex > 0 ? goPrev : null,
-                              child: Image.asset('assets/ic_left_arrow.png',width: 30,height: 30),
+                              child: Opacity(
+                                opacity: currentIndex == 0 ? 0.6 : 1, // 0.0 = invisible, 1.0 = full
+                                child: SvgPicture.asset(
+                                  'assets/images/ic_back.svg',
+                                  width: 45,
+                                  height: 45,
+                                ),
+                              ),
                             ),
                             const SizedBox(width: 24),
                             GestureDetector(
@@ -258,19 +276,23 @@ class _CategoryItemViewScreenState extends State<CategoryItemViewScreen> {
                                   _speakWithPause();
                                 }
                               },
-                              child:Image.asset( 'assets/ic_refersh.png',
-                                width: 30,
-                                height: 30,
+                              child: SvgPicture.asset(
+                                'assets/images/ic_play.svg',
+                                width: 45,
+                                height: 45,
                               ),
                             ),
-                             SizedBox(width: 24),
+                            SizedBox(width: 24),
                             GestureDetector(
                               onTap: currentIndex < widget.items.length - 1 ? goNext : null,
-                              child: Image.asset(
-                                'assets/ic_right_arrow.png',
-                                width: 30,
-                                height: 30,
+                              child: Opacity(
+                                opacity: currentIndex == widget.items.length - 1 ? 0.6 : 1,
+                                child: SvgPicture.asset(
+                                'assets/images/ic_right_arrow.svg',
+                                width: 45,
+                                height: 45,
                               ),
+                              )
                             )
                           ],
                         ),

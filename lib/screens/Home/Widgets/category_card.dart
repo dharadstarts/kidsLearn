@@ -75,7 +75,7 @@ class CategoryCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: AppTextStyles.custom(fontSize: 14,fontWeight: FontWeight.normal).withColor(ColorHelper.fromHex('#1e1e1e')
+                    style: AppTextStyles.custom(fontSize: 14,fontWeight: FontWeight.w500).withColor(ColorHelper.fromHex('#1e1e1e')
                     ),
                   ),
                 ),

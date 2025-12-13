@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kids_learn/screens/Home/Models/category_item_model.dart';
 import '../AppTextStyles.dart';
 import '../ColorHelper.dart';
@@ -53,7 +54,11 @@ class Tapsetlistscreen extends StatelessWidget {
                           onTap: () => Navigator.pop(context),
                           child: Container(
                             padding: const EdgeInsets.all(4),
-                            child: Icon(Icons.arrow_back, color: ColorHelper.fromHex('#5d4434')),
+                            child: SvgPicture.asset(
+                            'assets/images/ic_back.svg',
+                            width: 30,
+                            height: 30,
+                          ),
                           ),
                         ),
                       ),

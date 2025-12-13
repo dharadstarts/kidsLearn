@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:provider/provider.dart';
+import '../SoundManager/SoundProvider.dart';
 import '../Auth/customLaunchScreen.dart';
 
 class ChristmasLaunchScreen extends StatefulWidget {
@@ -11,8 +12,6 @@ class ChristmasLaunchScreen extends StatefulWidget {
 
 class _ChristmasLaunchScreenState extends State<ChristmasLaunchScreen> {
   bool animate = false;
-  late AudioPlayer audioPlayer;
-  bool isPlaying = false;
 
   @override
   void initState() {
@@ -30,78 +29,42 @@ class _ChristmasLaunchScreenState extends State<ChristmasLaunchScreen> {
       return;
     }
 
-    // Initialize audio player and start animation
-    audioPlayer = AudioPlayer();
-
-    // Set up player state listeners
-    audioPlayer.onPlayerComplete.listen((event) {
-      print("Audio completed");
-    });
-
-
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      print("Player state: $state");
-      setState(() {
-        isPlaying = state == PlayerState.playing;
-      });
-    });
-
+    // Start animation and play Christmas music
     startTheAnimation();
-    playChristmasMusic();
   }
 
   bool _shouldShowChristmasScreen() {
     final DateTime now = DateTime.now();
-    final DateTime expiryDate = DateTime(2026, 1, 1); // January 1, 2026
+    final DateTime expiryDate = DateTime(2026, 1, 1);
     return now.isBefore(expiryDate);
   }
 
-  Future<void> playChristmasMusic() async {
-    try {
-      print("Attempting to play audio...");
+  Future<void> startTheAnimation() async {
+    // Get sound provider and play Christmas music
+    final soundProvider = Provider.of<SoundProvider>(context, listen: false);
 
-      // Try different path formats
-      await audioPlayer.play(AssetSource('audios/jingle_sound.mp3'));
+    await Future.delayed(Duration(milliseconds: 200), () {
+      setState(() {
+        animate = true;
+      });
+    });
 
-      print("Audio play command sent successfully");
+    // Play Christmas music
+    soundProvider.playChristmasMusic();
 
-      // Wait a bit and check state
-      await Future.delayed(Duration(milliseconds: 500));
+    // Navigate after delay
+    await Future.delayed(Duration(milliseconds: 8000), () async {
+      // Stop Christmas music before navigating
+      soundProvider.stopChristmasMusic();
 
-      if (!isPlaying) {
-        print("Audio didn't start playing, trying alternative method...");
-        await _playAudioWithAlternativeMethod();
-      }
+      // Start background music for the main app
+      soundProvider.playBackgroundMusic();
 
-    } catch (e) {
-      print('Error playing music: $e');
-      // Try alternative method if first fails
-      await _playAudioWithAlternativeMethod();
-    }
-  }
-
-  Future<void> _playAudioWithAlternativeMethod() async {
-    try {
-      // Alternative 1: Try without 'assets/' prefix
-      await audioPlayer.play(AssetSource('jingle_sound.mp3'));
-
-      // Set volume and loop
-      await audioPlayer.setVolume(0.9);
-      await audioPlayer.setReleaseMode(ReleaseMode.loop);
-
-      print("Alternative method - Audio play attempted");
-    } catch (e) {
-      print('Alternative method also failed: $e');
-    }
-  }
-
-  Future<void> stopMusic() async {
-    try {
-      await audioPlayer.stop();
-      print("Music stopped");
-    } catch (e) {
-      print('Error stopping music: $e');
-    }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const customLaunchScreen()),
+      );
+    });
   }
 
   @override
@@ -126,32 +89,8 @@ class _ChristmasLaunchScreenState extends State<ChristmasLaunchScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );
-  }
-
-  Future<void> startTheAnimation() async {
-    await Future.delayed(Duration(milliseconds: 200), () {
-      setState(() {
-        animate = true;
-      });
-    });
-
-    await Future.delayed(Duration(milliseconds: 8000), () async {
-      await stopMusic();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const customLaunchScreen()),
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    stopMusic();
-    audioPlayer.dispose();
-    super.dispose();
   }
 }

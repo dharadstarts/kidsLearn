@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'WordsScreen.dart'; // Make sure this import is correct
 
 class SpellingsScreen extends StatelessWidget {
@@ -145,7 +146,11 @@ class SpellingsScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: const Icon(Icons.arrow_back, size: 28, color: Colors.brown),
+                          child: SvgPicture.asset(
+                            'assets/images/ic_back.svg',
+                            width: 35,
+                            height: 35,
+                          ),
                         ),
                       ),
 

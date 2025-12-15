@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kids_learn/screens/Home/NumberScreen.dart';
 
 class MathsScreen extends StatelessWidget {
@@ -35,10 +36,10 @@ class MathsScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            size: 28,
-                            color: Colors.brown,
+                          child: SvgPicture.asset(
+                            'assets/images/ic_back.svg',
+                            width: 35,
+                            height: 35,
                           ),
                         ),
                       ),

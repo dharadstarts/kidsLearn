@@ -457,6 +457,10 @@ flutter:
     - assets/images/ic_play.svg
     - assets/images/ic_refersh.svg
     - assets/images/ic_right_arrow.svg
+    - assets/images/drawing/ic_close.svg
+    - assets/images/drawing/ic_paint_brush.svg
+    - assets/images/drawing/ic_undo.svg
+    - assets/images/drawing/ic_sound.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

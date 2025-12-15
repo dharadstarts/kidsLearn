@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 
@@ -12,6 +13,7 @@ class WordsScreen extends StatefulWidget {
 }
 
 class _WordsScreenState extends State<WordsScreen> {
+  int? pressedIndex;
   final FlutterTts flutterTts = FlutterTts();
 
   final List<Color> colors = [
@@ -60,7 +62,11 @@ class _WordsScreenState extends State<WordsScreen> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.black),
+                    icon: SvgPicture.asset(
+                      'assets/images/ic_back.svg',
+                      width: 35,
+                      height: 35,
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   title: Column(
@@ -103,18 +109,92 @@ class _WordsScreenState extends State<WordsScreen> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: GestureDetector(
-                                        onTap: () => _speak(enWord, "en-US"),
-                                        child: buildWordBox(enWord, color),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(12),
+                                        onTapDown: (_) {
+                                          setState(() => pressedIndex = index * 2);
+                                        },
+                                        onTapUp: (_) {
+                                          setState(() => pressedIndex = null);
+                                          _speak(enWord, "en-US");
+                                        },
+                                        onTapCancel: () {
+                                          setState(() => pressedIndex = null);
+                                        },
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 280),
+                                          curve: Curves.bounceIn,
+                                          padding: const EdgeInsets.symmetric(vertical: 12),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            gradient: pressedIndex == index * 2
+                                                ? LinearGradient(
+                                              begin: Alignment.topRight,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                color.withOpacity(0.95),
+                                                color.withOpacity(0.65),
+                                              ],
+                                            )
+                                                : null,
+                                            color: pressedIndex == index * 2 ? null : color,
+                                          ),
+                                          child: Text(
+                                            enWord,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
+
                                     const SizedBox(width: 12),
                                     Expanded(
-                                      child: GestureDetector(
-                                        onTap: () => _speak(guWord, "gu-IN"),
-                                        child: buildWordBox(guWord, color),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(12),
+                                        onTapDown: (_) {
+                                          setState(() => pressedIndex = index * 2 + 1);
+                                        },
+                                        onTapUp: (_) {
+                                          setState(() => pressedIndex = null);
+                                          _speak(guWord, "gu-IN");
+                                        },
+                                        onTapCancel: () {
+                                          setState(() => pressedIndex = null);
+                                        },
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 280),
+                                          curve: Curves.bounceIn,
+                                          padding: const EdgeInsets.symmetric(vertical: 12),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            gradient: pressedIndex == index * 2 + 1
+                                                ? LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                color.withOpacity(0.85),
+                                                color.withOpacity(0.55),
+                                              ],
+                                            )
+                                                : null,
+                                            color: pressedIndex == index * 2 + 1 ? null : color,
+                                          ),
+                                          child: Text(
+                                            guWord,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
+
                                   ],
                                 ),
                               );

@@ -1,8 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-
+import 'package:flutter_svg/svg.dart';
 import 'Data/sleep_data.dart';
 
 class BabySleepScreen extends StatefulWidget {
@@ -95,7 +94,7 @@ class _BabySleepScreenState extends State<BabySleepScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +105,11 @@ class _BabySleepScreenState extends State<BabySleepScreen> {
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.brown),
+                        icon: SvgPicture.asset(
+                          'assets/images/ic_back.svg',
+                          width: 30,
+                          height: 30,
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                       const Spacer(),

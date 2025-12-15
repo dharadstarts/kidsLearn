@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class NumberPuzzleScreen extends StatefulWidget {
@@ -83,7 +84,11 @@ class _NumberPuzzleScreenState extends State<NumberPuzzleScreen> {
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: const Icon(Icons.arrow_back, size: 30, color: Colors.brown),
+                      child: SvgPicture.asset(
+                        'assets/images/ic_back.svg',
+                        width: 35,
+                        height: 35,
+                      ),
                     ),
                     const Spacer(),
                     const Text(

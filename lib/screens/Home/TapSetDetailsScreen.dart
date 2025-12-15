@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import '../Home/Data/tap_set_data.dart';
@@ -39,10 +40,14 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
 
   void _initializePuzzle() {
     final currentAnimal = widget.items[currentIndex];
-    answerBoxes = List.filled(currentAnimal.name.length, null);
+    final cleanName = _cleanWord(currentAnimal.name);
+    answerBoxes = List.filled(cleanName.length, null);
     usedLetters = List.filled(currentAnimal.shuffledLetters.length, false);
   }
 
+  String _cleanWord(String word) {
+    return word.replaceAll(' ', '').toUpperCase();
+  }
   void _onLetterTap(int index) {
     if (usedLetters[index]) return;
 
@@ -75,7 +80,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   }
 
   Future<void> _playSpelling() async {
-    final word = widget.items[currentIndex].name;
+    final word = _cleanWord(widget.items[currentIndex].name);
     for (var char in word.characters) {
       await tts.speak(char);
       await Future.delayed(const Duration(milliseconds: 900));
@@ -84,7 +89,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
 
   void _checkAnswer() {
     final userAnswer = answerBoxes.join();
-    final correctAnswer = widget.items[currentIndex].name;
+    final correctAnswer = _cleanWord(widget.items[currentIndex].name);
 
     if (answerBoxes.every((e) => e == null)) {
       tts.speak("Try again");
@@ -138,6 +143,30 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
     }
   }
 
+  void _fillRightAnswer() {
+    final cleanWord = _cleanWord(widget.items[currentIndex].name);
+    final shuffledLetters = widget.items[currentIndex].shuffledLetters;
+
+    setState(() {
+      answerBoxes = cleanWord.split('');
+
+      usedLetters = List.generate(
+        shuffledLetters.length,
+            (i) => cleanWord.contains(shuffledLetters[i]),
+      );
+    });
+
+    tts.speak(widget.items[currentIndex].name.trim().toLowerCase());
+
+    Fluttertoast.showToast(
+      msg: "Your answer is ready!",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentAnimal = widget.items[currentIndex];
@@ -159,8 +188,15 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
                 child: Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back, size: 28),
-                      onPressed: () => Navigator.pop(context),
+                      icon: SvgPicture.asset(
+                        'assets/images/ic_back.svg',
+                        width: 30,
+                        height: 30,
+                      ),
+                      onPressed: () {
+                        tts.stop();
+                        Navigator.pop(context);
+                      }
                     ),
                     Expanded(
                       child: Text(
@@ -213,6 +249,15 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
                                   onPressed: _playSpelling,
                                   icon: const Icon(Icons.spellcheck),
                                   label: const Text("Spelling"),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF6B4423),
+                                    foregroundColor: Colors.white,
+                                  ),
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: _fillRightAnswer, // create this method
+                                  icon: const Icon(Icons.edit),
+                                  label: const Text("Fill Answer"),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF6B4423),
                                     foregroundColor: Colors.white,

@@ -118,7 +118,11 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: const Color(0xFF6E4D3F)),
+          icon: SvgPicture.asset(
+            'assets/images/ic_back.svg',
+            width: 35,
+            height: 35,
+          ),
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: const Text(

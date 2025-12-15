@@ -19,7 +19,7 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
   late ScribbleNotifier notifier;
 
   // Local UI state (avoid reading notifier internals)
-  Color selectedColor = Colors.brown;
+  Color selectedColor = Colors.red;
   double brushSize = 5.0;
 
   @override
@@ -169,10 +169,10 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset(
-                            'assets/images/ic_back.svg',
-                            width: 30,
-                            height: 30,
-                          ),
+            'assets/images/ic_back.svg',
+            width: 30,
+            height: 30,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
@@ -231,26 +231,39 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 /// Brush size
+
                 IconButton(
-                  icon: const Icon(Icons.brush, size: 30),
+                  icon: SvgPicture.asset(
+                    'assets/images/drawing/ic_paint_brush.svg',
+                    width: 40,
+                    height: 40,
+                  ),
                   onPressed: _openBrushSizeDialog,
                 ),
 
                 /// Color picker (uses local selectedColor for icon)
                 IconButton(
-                  icon: Icon(Icons.circle, color: selectedColor, size: 30),
+                  icon: Icon(Icons.circle, color: selectedColor, size: 40),
                   onPressed: _openColorPicker,
                 ),
 
                 /// Undo
                 IconButton(
-                  icon: const Icon(Icons.undo, size: 30),
+                  icon: SvgPicture.asset(
+                    'assets/images/drawing/ic_undo.svg',
+                    width: 40,
+                    height: 40,
+                  ),
                   onPressed: notifier.undo,
                 ),
 
                 /// Clear
                 IconButton(
-                  icon: const Icon(Icons.clear, size: 30),
+                  icon: SvgPicture.asset(
+                    'assets/images/drawing/ic_close.svg',
+                    width: 40,
+                    height: 40,
+                  ),
                   onPressed: notifier.clear,
                 ),
               ],

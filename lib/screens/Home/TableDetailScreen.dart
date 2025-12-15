@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TableDetailScreen extends StatefulWidget {
@@ -135,7 +136,11 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, size: 26),
+                    icon: SvgPicture.asset(
+                      'assets/images/ic_back.svg',
+                      width: 35,
+                      height: 35,
+                    ),
                       onPressed: () async {
                         isSpeaking = false;
                         await flutterTts.stop();  // ⛔ Stop any active speech
@@ -156,19 +161,8 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
                   ),
 
                   // SPEAK BUTTON (SAME SIZE AS BEFORE)
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: IconButton(
+
+                     IconButton(
                       onPressed: () async {
                         isSpeaking = false;
                         await flutterTts.stop();
@@ -176,17 +170,17 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
                         isSpeaking = true;
                         speakTable();
                       },
-                      icon: const Icon(Icons.volume_up_rounded, size: 24),
-                      color: Colors.brown,
-                      padding: const EdgeInsets.all(12),
+                      icon: SvgPicture.asset(
+                        'assets/images/drawing/ic_sound.svg',
+                        width: 40,
+                        height: 40,
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 10),
                 ],
               ),
 
-              const SizedBox(height: 5),
 
               // MAIN AREA
               Expanded(
@@ -198,7 +192,7 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
                       width: MediaQuery.of(context).size.width * 0.72,
                       margin: const EdgeInsets.only(top: 40, bottom: 100),
                       padding: const EdgeInsets.only(
-                          top: 15, left: 30, right: 30, bottom: 20),
+                          top: 15, left: 30, right: 30, bottom: 10),
                       decoration: BoxDecoration(
                         color: randomBg,
                         borderRadius: BorderRadius.circular(40),
@@ -275,19 +269,7 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
 
               // REFRESH BUTTON
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 8,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
+                padding: const EdgeInsets.only(bottom: 20),
                   child: IconButton(
                     onPressed: () async {
                       isSpeaking = false;          // immediately stop loop
@@ -296,12 +278,13 @@ class _TableDetailScreenState extends State<TableDetailScreen> {
                       isSpeaking = true;
                       await speakTable();          // restart speaking
                     },
-                    icon: const Icon(Icons.refresh, size: 26),
-                    color: Colors.black,
-                    padding: const EdgeInsets.all(12),
+                    icon: SvgPicture.asset(
+                      'assets/images/ic_refersh.svg',
+                      width: 50,
+                      height: 50,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

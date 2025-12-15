@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class QuizScreen extends StatelessWidget {
   const QuizScreen({super.key});
@@ -22,7 +23,11 @@ class QuizScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.brown),
+                      icon: SvgPicture.asset(
+                        'assets/images/ic_back.svg',
+                        width: 35,
+                        height: 35,
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
                     const Expanded(

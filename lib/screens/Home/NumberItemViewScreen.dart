@@ -195,8 +195,8 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
                           onTap: currentIndex > 0 ? goPrev : null,
                           child: SvgPicture.asset(
                             'assets/images/ic_back.svg',
-                            width: 30,
-                            height: 30,
+                            width: 40,
+                            height: 40,
                           ),
                         ),
                         const SizedBox(width: 24),
@@ -211,18 +211,19 @@ class _NumberItemViewScreenState extends State<NumberItemViewScreen> {
                               _speakWithPause();
                             }
                           },
-                          child:Image.asset( 'assets/ic_refersh.png',
-                            width: 30,
-                            height: 30,
+                          child:SvgPicture.asset(
+                            'assets/images/ic_play.svg',
+                            width: 40,
+                            height: 40,
                           ),
                         ),
                         const SizedBox(width: 24),
                         GestureDetector(
                           onTap: currentIndex < numbers.length - 1 ? goNext : null,
-                          child: Image.asset(
-                            'assets/ic_right_arrow.png',
-                            width: 30,
-                            height: 30,
+                          child: SvgPicture.asset(
+                            'assets/images/ic_right_arrow.svg',
+                            width: 40,
+                            height: 40,
                           ),
                         ),
                       ],

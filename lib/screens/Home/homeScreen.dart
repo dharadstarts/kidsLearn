@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isSoundOn = true;
 
   @override
   void initState() {
@@ -30,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String getGreetingMessage() {
     final hour = DateTime.now().hour;
-
     if (hour >= 5 && hour < 12) {
       return "Good Morning!";
     } else if (hour >= 12 && hour < 17) {
@@ -40,9 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // -------- RESPONSIVE HELPERS --------
+  bool isTablet(BuildContext context) =>
+      MediaQuery.of(context).size.width >= 600;
+
+  double scale(BuildContext context, double size) =>
+      isTablet(context) ? size * 1.2 : size;
+  // -----------------------------------
+
   @override
   Widget build(BuildContext context) {
     final soundProvider = Provider.of<SoundProvider>(context);
+
     return ChangeNotifierProvider(
       create: (_) => CategoryViewModel(),
       child: Consumer<CategoryViewModel>(
@@ -51,19 +58,34 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: const Drawer(),
             body: Stack(
               children: [
+
+                // ---------- FULL SCREEN BACKGROUND ----------
                 Positioned.fill(
-                  child: Image.asset(
-                    'assets/images/Home/ic_home_bg.png',
-                    fit: BoxFit.fill,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/Home/ic_home_bg.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
+
+                // ---------- CONTENT ----------
                 SafeArea(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
-                      double boxWidth = (constraints.maxWidth - 48) / 2;
+
+                      final double boxWidth = isTablet(context)
+                          ? (constraints.maxWidth - scale(context, 80)) / 3
+                          : (constraints.maxWidth - scale(context, 48)) / 2;
 
                       return SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
+
+                        // 🔑 THIS IS THE KEY FIX
                         child: ConstrainedBox(
                           constraints: BoxConstraints(
                             minHeight: constraints.maxHeight,
@@ -71,113 +93,120 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // --- Top Row with Greeting & Sound Button ---
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 22.0),
-                                    child: Text(
-                                      getGreetingMessage(),
-                                      style: AppTextStyles.heading1,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: Image.asset(
-                                      soundProvider.isSoundOn // Use soundProvider's state
-                                          ? 'assets/images/Home/ic_sound.png'
-                                          : 'assets/images/Home/ic_sound_off.png',
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                                    onPressed: () {
-                                      soundProvider.toggleSound(); // This will now work
-                                    },
-                                  ),
 
-                                ],
+                              // ---------- TOP BAR ----------
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: scale(context, 22),
+                                  vertical: scale(context, 10),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      getGreetingMessage(),
+                                      style: AppTextStyles.heading1
+                                          .withSize(scale(context, 22)),
+                                    ),
+                                    IconButton(
+                                      icon: Image.asset(
+                                        soundProvider.isSoundOn
+                                            ? 'assets/images/Home/ic_sound.png'
+                                            : 'assets/images/Home/ic_sound_off.png',
+                                        width: scale(context, 40),
+                                        height: scale(context, 40),
+                                      ),
+                                      onPressed: soundProvider.toggleSound,
+                                    ),
+                                  ],
+                                ),
                               ),
 
-                              const SizedBox(height: 20),
+                              SizedBox(height: scale(context, 16)),
 
-                              // --- Categories ---
+                              // ---------- CATEGORIES ----------
                               Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: scale(context, 16),
+                                ),
                                 child: Wrap(
-                                  alignment: WrapAlignment.spaceEvenly,
-                                  spacing: 16,
-                                  runSpacing: 20,
+                                  spacing: scale(context, 16),
+                                  runSpacing: scale(context, 20),
                                   children: List.generate(
                                     viewModel.categoryList.length,
                                         (index) {
-                                      final category = viewModel.categoryList[index];
                                       return CategoryWidget(
                                         index: index,
-                                        category: category,
+                                        category:
+                                        viewModel.categoryList[index],
                                         width: boxWidth,
-                                        onTap: (i) =>
-                                            viewModel.onCategoryTapped(context, i),
+                                        onTap: (i) => viewModel
+                                            .onCategoryTapped(context, i),
                                       );
                                     },
                                   ),
                                 ),
                               ),
 
-                              const SizedBox(height: 20),
+                              SizedBox(height: scale(context, 22)),
 
-                              // --- Spelling Banner ---
+                              // ---------- SPELLING BANNER ----------
                               buildBanner(
+                                context: context,
                                 gradient: const LinearGradient(
                                   colors: [
                                     Color(0xFFCA2631),
                                     Color(0xFFd43d48),
                                     Color(0xFFe85567),
                                     Color(0xFFfc6d89),
-                                    Color(0xFFff7c99),
-                                    Color(0xFFfe85a1),
                                   ],
                                 ),
                                 title: "Fun With Spellings",
-                                subtitle: "Simple spelling practice for smart kids!",
+                                subtitle:
+                                "Simple spelling practice for smart kids!",
                                 leadingImagePath:
                                 'assets/images/Home/ic_spelling.png',
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => SpellingsScreen()),
+                                      builder: (_) => SpellingsScreen(),
+                                    ),
                                   );
                                 },
                               ),
 
-                              const SizedBox(height: 10),
+                              SizedBox(height: scale(context, 14)),
 
-                              // --- Quiz Banner ---
+                              // ---------- QUIZ BANNER ----------
                               buildBanner(
+                                context: context,
                                 gradient: const LinearGradient(
                                   colors: [
                                     Color(0xFF44631D),
                                     Color(0xFF497c04),
                                     Color(0xFF85a424),
                                     Color(0xFFa8b73d),
-                                    Color(0xFFc0c44d),
-                                    Color(0xFFd6d157)
                                   ],
                                 ),
                                 title: "Fun Brain Quiz",
-                                subtitle: "Catch the clues and boost your brain power!",
+                                subtitle:
+                                "Catch the clues and boost your brain power!",
                                 trailingImagePath:
                                 'assets/images/Home/ic_quiz.png',
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (_) => QuizScreen()),
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                      const QuizScreen(),
+                                    ),
                                   );
                                 },
                               ),
 
-                              const SizedBox(height: 25),
+                              SizedBox(height: scale(context, 24)),
                             ],
                           ),
                         ),
@@ -193,8 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- UI Banner---
+  // ---------- BANNER ----------
   Widget buildBanner({
+    required BuildContext context,
     required Gradient gradient,
     required String title,
     required String subtitle,
@@ -205,23 +235,29 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 22),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: EdgeInsets.symmetric(
+          horizontal: scale(context, 22),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: scale(context, 18),
+          vertical: scale(context, 12),
+        ),
         decoration: BoxDecoration(
           gradient: gradient,
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(scale(context, 40)),
         ),
         child: Row(
           children: [
             if (leadingImagePath != null)
               Image.asset(
                 leadingImagePath,
-                height: 55,
-                fit: BoxFit.contain,
+                height: scale(context, 55),
               ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                padding: EdgeInsets.symmetric(
+                  horizontal: scale(context, 10),
+                ),
                 child: Column(
                   crossAxisAlignment: leadingImagePath != null
                       ? CrossAxisAlignment.end
@@ -229,24 +265,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       title,
-                      textAlign: TextAlign.right,
-                      style: leadingImagePath != null
-                          ? AppTextStyles.heading1.withColor(Colors.white)
-                          .withSize(17)
-                          .withWeight(FontWeight.bold)
-                          : AppTextStyles.heading1
+                      style: AppTextStyles.heading1
                           .withColor(Colors.white)
-                          .withSize(17)
+                          .withSize(scale(context, 18))
                           .withWeight(FontWeight.bold),
                     ),
+                    SizedBox(height: scale(context, 4)),
                     Text(
                       subtitle,
-                      textAlign:
-                      leadingImagePath != null ? TextAlign.right : TextAlign.left,
-                      style: leadingImagePath != null
-                          ? AppTextStyles.custom(fontSize: 13).withWeight(FontWeight.w500).withColor(Colors.white)
-                          : AppTextStyles.custom(fontSize: 13).withWeight(FontWeight.w500)
-                          .withColor(Colors.white),
+                      style: AppTextStyles.custom(
+                        fontSize: scale(context, 13),
+                      ).withColor(Colors.white),
                     ),
                   ],
                 ),
@@ -255,8 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (trailingImagePath != null)
               Image.asset(
                 trailingImagePath,
-                height: 55,
-                fit: BoxFit.contain,
+                height: scale(context, 55),
               ),
           ],
         ),

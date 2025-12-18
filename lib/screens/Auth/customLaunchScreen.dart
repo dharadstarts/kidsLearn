@@ -27,7 +27,7 @@ class _customLaunchScreenState extends State<customLaunchScreen> {
       }
 
       // Navigate to HomeScreen after delay
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(Duration(seconds: 10), () {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -67,7 +67,7 @@ class _customLaunchScreenState extends State<customLaunchScreen> {
         animate = true;
       });
     });
-    await Future.delayed(Duration(milliseconds: 4000),() {
+    await Future.delayed(Duration(seconds: 10),() {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),

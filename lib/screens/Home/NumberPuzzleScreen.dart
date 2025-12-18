@@ -10,6 +10,9 @@ class NumberPuzzleScreen extends StatefulWidget {
 }
 
 class _NumberPuzzleScreenState extends State<NumberPuzzleScreen> {
+  bool isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.shortestSide >= 600;
+  }
   /// Current puzzle state
   List<String?> numbers = ["3", null, "5", "1", "4", "7", "6", "2", "8"];
 
@@ -79,7 +82,7 @@ class _NumberPuzzleScreenState extends State<NumberPuzzleScreen> {
             children: [
               /// TOP BAR
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -110,7 +113,7 @@ class _NumberPuzzleScreenState extends State<NumberPuzzleScreen> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 35, right: 35),
+                  padding:  EdgeInsets.only(left: isTablet(context) ? 100 : 35, right: isTablet(context) ? 100 : 35),
                   child: GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: numbers.length,
@@ -155,7 +158,9 @@ class _NumberPuzzleScreenState extends State<NumberPuzzleScreen> {
                   ),
                 ),
 
-              const SizedBox(height: 240),
+              SizedBox(
+                height: isTablet(context) ? 450 : 200,
+              ),
             ],
           ),
         ),

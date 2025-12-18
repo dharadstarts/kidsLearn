@@ -461,6 +461,7 @@ flutter:
     - assets/images/drawing/ic_paint_brush.svg
     - assets/images/drawing/ic_undo.svg
     - assets/images/drawing/ic_sound.svg
+    - assets/images/correct.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

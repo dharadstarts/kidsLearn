@@ -19,42 +19,43 @@ class LetterCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double cardHeight = size * 1.5;
-
     return GestureDetector(
       onTap: () => onTap(index),
-      child: SizedBox(
-        width: size,
-        height: cardHeight,
-        child: Stack(
-          children: [
-            // Background Frame
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/categoryDetailList/ic_commonShape.png',
-                fit: BoxFit.contain,
-              ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // ✅ Background frame fills the card
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/categoryDetailList/ic_commonShape.png',
+              fit: BoxFit.contain,
             ),
+          ),
 
-            // Foreground Content ALWAYS CENTERED
-            Positioned.fill(
-              child: Center(
-                child: categoriesDetailList.label.isNotEmpty
-                    ? Text(
-                    categoriesDetailList.label,
-                    style: AppTextStyles.title.withColor(ColorHelper.fromHex('#5e3001')).withSize(size * 0.75)
-                )
-                    : Image.asset(
-                  categoriesDetailList.imageAsset,
-                  width: size * 0.6,
-                  height: size * 0.6,
-                  fit: BoxFit.contain,
-                ),
+          // ✅ Foreground content (TEXT / IMAGE)
+          Transform.translate(
+            offset: const Offset(0, 6), // 👈 pushes content slightly DOWN
+            child: categoriesDetailList.label.isNotEmpty
+                ? Text(
+              categoriesDetailList.label,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.title
+                  .withColor(ColorHelper.fromHex('#5e3001'))
+                  .withSize(size * 0.6)
+                  .copyWith(
+                height: 1, // 👈 removes extra font top space
               ),
+            )
+                : Image.asset(
+              categoriesDetailList.imageAsset,
+              width: size * 0.55,
+              height: size * 0.55,
+              fit: BoxFit.contain,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+

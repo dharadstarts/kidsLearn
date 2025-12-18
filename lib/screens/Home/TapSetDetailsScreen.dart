@@ -21,6 +21,8 @@ class Tapsetdetailsscreen extends StatefulWidget {
 class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   final FlutterTts tts = FlutterTts();
 
+  bool isAnswerCorrect = false;
+  bool showCorrectGif = false;
   int currentIndex = 0;
   List<String?> answerBoxes = [];
   List<bool> usedLetters = [];
@@ -48,6 +50,7 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
   String _cleanWord(String word) {
     return word.replaceAll(' ', '').toUpperCase();
   }
+
   void _onLetterTap(int index) {
     if (usedLetters[index]) return;
 
@@ -91,48 +94,107 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
     final userAnswer = answerBoxes.join();
     final correctAnswer = _cleanWord(widget.items[currentIndex].name);
 
+    // 1️⃣ Blank validation
     if (answerBoxes.every((e) => e == null)) {
-      tts.speak("Try again");
+      Fluttertoast.showToast(
+        msg: "Please fill the answer",
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+      );
+      tts.speak("Please fill the answer");
       return;
     }
 
+    // 2️⃣ Correct answer
     if (userAnswer == correctAnswer) {
-      Fluttertoast.showToast(
-        msg: "Good!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
+      setState(() {
+        isAnswerCorrect = true;
+        showCorrectGif = true;
+      });
 
       tts.speak("Right answer");
 
-      Future.delayed(const Duration(milliseconds: 800), () {
-        _nextAnimal();
+      // Hide GIF after 2 seconds
+      Future.delayed(const Duration(seconds: 5), () {
+        setState(() => showCorrectGif = false);
       });
-    } else {
+    }
+    // 3️⃣ Wrong answer
+    else {
+      setState(() {
+        isAnswerCorrect = false;
+      });
+
       Fluttertoast.showToast(
-        msg: "Incorrect! Try again!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
+        msg: "Your answer \n is wrong",
         backgroundColor: Colors.red,
         textColor: Colors.white,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_LONG,
+        fontSize: 20,
       );
-      tts.speak("Incorrect! Try again!");
+      tts.speak("Your answer \n is wrong");
     }
   }
 
   void _nextAnimal() {
+    final userAnswer = answerBoxes.join();
+    final correctAnswer = _cleanWord(widget.items[currentIndex].name);
+
+    // 1️⃣ Blank answer
+    if (answerBoxes.every((e) => e == null)) {
+      Fluttertoast.showToast(
+        msg: "Please fill the answer",
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+      );
+      return;
+    }
+
+    // 2️⃣ Correct answer → show GIF → delay → next
+    if (userAnswer == correctAnswer) {
+      setState(() {
+        isAnswerCorrect = true;
+        showCorrectGif = true;
+      });
+
+      tts.speak("Right answer");
+
+      // Hide GIF after 2 seconds and move to next
+      Future.delayed(const Duration(seconds: 5), () {
+        setState(() {
+          showCorrectGif = false;
+        });
+        _moveToNext();
+      });
+      return;
+    }
+
+    // 3️⃣ Wrong answer → toast → next
+    Fluttertoast.showToast(
+      msg: "Your answer \n is wrong",
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      gravity: ToastGravity.CENTER,
+      toastLength: Toast.LENGTH_LONG,
+      fontSize: 20,
+    );
+    Future.delayed(const Duration(seconds: 4), () {
+      _moveToNext();
+    });
+
+  }
+
+  void _moveToNext() {
     if (currentIndex < widget.items.length - 1) {
       setState(() {
         currentIndex++;
+        isAnswerCorrect = false;
         _initializePuzzle();
       });
     } else {
       Fluttertoast.showToast(
         msg: "All puzzles complete!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
         backgroundColor: Colors.green,
         textColor: Colors.white,
       );
@@ -167,135 +229,206 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
     );
   }
 
+  void _clearAnswer() {
+    setState(() {
+      // Clear all filled answer boxes
+      answerBoxes = List.filled(answerBoxes.length, null);
+
+      // Mark all letters as unused
+      usedLetters = List.filled(usedLetters.length, false);
+    });
+
+    tts.speak("Cleared");
+
+    Fluttertoast.showToast(
+      msg: "Cleared!",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.orange,
+      textColor: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentAnimal = widget.items[currentIndex];
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/TapSet/ic_tapset_deatil_bg.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // HEADER
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/images/ic_back.svg',
-                        width: 30,
-                        height: 30,
-                      ),
-                      onPressed: () {
-                        tts.stop();
-                        Navigator.pop(context);
-                      }
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${widget.title}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF6B4423),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 38),
-                  ],
-                ),
+      body: Stack(
+        children: [
+          // MAIN CONTENT
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/TapSet/ic_tapset_deatil_bg.png'),
+                fit: BoxFit.cover,
               ),
-
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      // MAIN PUZZLE BOX
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.all(12),
-                        padding: const EdgeInsets.all(12),
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/TapSet/ic_main_box.png'),
-                            fit: BoxFit.fill,
+            ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  // HEADER
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            icon: SvgPicture.asset(
+                              'assets/images/ic_back.svg',
+                              width: 30,
+                              height: 30,
+                            ),
+                            onPressed: () {
+                              tts.stop();
+                              Navigator.pop(context);
+                            }
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${widget.title}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF6B4423),
+                            ),
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            Wrap(
-                              alignment: WrapAlignment.spaceEvenly,
-                              spacing: 8,
+                        const SizedBox(width: 38),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          // MAIN PUZZLE BOX
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(12),
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/TapSet/ic_main_box.png'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            child: Column(
                               children: [
-                                ElevatedButton.icon(
-                                  onPressed: _playWord,
-                                  icon: const Icon(Icons.volume_up),
-                                  label: const Text("Word"),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF6B4423),
-                                    foregroundColor: Colors.white,
-                                  ),
+                                const SizedBox(height: 10),
+                                Wrap(
+                                  alignment: WrapAlignment.spaceEvenly,
+                                  spacing: 8,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: _playWord,
+                                      icon: const Icon(Icons.volume_up),
+                                      label: const Text("Word"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(0xFF6B4423),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: _playSpelling,
+                                      icon: const Icon(Icons.spellcheck),
+                                      label: const Text("Spelling"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(0xFF6B4423),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: _fillRightAnswer,
+                                      icon: const Icon(Icons.edit),
+                                      label: const Text("Fill Answer"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(0xFF6B4423),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: _clearAnswer,
+                                      icon: const Icon(Icons.clear),
+                                      label: const Text("Clear"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(0xFF6B4423),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                ElevatedButton.icon(
-                                  onPressed: _playSpelling,
-                                  icon: const Icon(Icons.spellcheck),
-                                  label: const Text("Spelling"),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF6B4423),
-                                    foregroundColor: Colors.white,
-                                  ),
+
+                                const SizedBox(height: 30),
+
+                                Image.asset(
+                                  currentAnimal.imagePath,
+                                  height: 180,
+                                  fit: BoxFit.contain,
                                 ),
-                                ElevatedButton.icon(
-                                  onPressed: _fillRightAnswer, // create this method
-                                  icon: const Icon(Icons.edit),
-                                  label: const Text("Fill Answer"),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF6B4423),
-                                    foregroundColor: Colors.white,
+                                const SizedBox(height: 30),
+
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: List.generate(
+                                    answerBoxes.length,
+                                        (index) => GestureDetector(
+                                      onTap: () => _onAnswerBoxTap(index),
+                                      child: Container(
+                                        width: 45,
+                                        height: 45,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFB8956A),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            answerBoxes[index] ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
+                          ),
 
-                            const SizedBox(height: 30),
-
-                            Image.asset(
-                              currentAnimal.imagePath,
-                              height: 180,
-                              fit: BoxFit.contain,
-                            ),
-
-                            const SizedBox(height: 30),
-
-                            Wrap(
+                          // LETTER BUTTONS
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Wrap(
                               alignment: WrapAlignment.center,
-                              spacing: 8,
-                              runSpacing: 8,
+                              spacing: 12,
+                              runSpacing: 12,
                               children: List.generate(
-                                answerBoxes.length,
+                                currentAnimal.shuffledLetters.length,
                                     (index) => GestureDetector(
-                                  onTap: () => _onAnswerBoxTap(index),
+                                  onTap: () => _onLetterTap(index),
                                   child: Container(
                                     width: 45,
                                     height: 45,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFB8956A),
-                                      borderRadius: BorderRadius.circular(8),
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage('assets/images/TapSet/ic_circle.png'),
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                     child: Center(
                                       child: Text(
-                                        answerBoxes[index] ?? '',
+                                        usedLetters[index]
+                                            ? ''
+                                            : currentAnimal.shuffledLetters[index],
                                         style: const TextStyle(
-                                          fontSize: 24,
+                                          fontSize: 28,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -305,108 +438,102 @@ class _TapsetdetailsscreenState extends State<Tapsetdetailsscreen> {
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
-                      // LETTER BUTTONS
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          spacing: 12,
-                          runSpacing: 12,
-                          children: List.generate(
-                            currentAnimal.shuffledLetters.length,
-                                (index) => GestureDetector(
-                              onTap: () => _onLetterTap(index),
-                              child: Container(
-                                width: 45,
-                                height: 45,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/TapSet/ic_circle.png'),
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    usedLetters[index]
-                                        ? ''
-                                        : currentAnimal.shuffledLetters[index],
-                                    style: const TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                          const SizedBox(height: 30),
+
+                          // CHECK + NEXT BUTTONS
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: _checkAnswer,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF6B4423),
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'CHECK',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: _nextAnimal,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF6B4423),
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'NEXT',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
+
+                          const SizedBox(height: 30),
+                        ],
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-                      const SizedBox(height: 30),
-
-                      // CHECK + NEXT BUTTONS
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: _checkAnswer,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF6B4423),
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'CHECK',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: _nextAnimal,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF6B4423),
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'NEXT',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+          // FULL-SCREEN GIF OVERLAY
+          if (showCorrectGif)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  showCorrectGif = false;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.01), // Semi-transparent background
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.transparent,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        'assets/images/correct.gif', // Replace with your GIF path
+                        fit: BoxFit.contain,
                       ),
-
-                      const SizedBox(height: 30),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+        ],
       ),
     );
   }

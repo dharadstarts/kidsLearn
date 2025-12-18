@@ -139,7 +139,7 @@ class _stateCatergoyDetailListScreen
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 20,
-                                    mainAxisSpacing: 12,
+                                    mainAxisSpacing: 14,
                                     mainAxisExtent: 180,
                                   ),
                                   itemBuilder: (context, index) {
@@ -148,9 +148,7 @@ class _stateCatergoyDetailListScreen
                                     return widget.screenType == "drawing"
                                         ? LetterCategoryCard(
                                       index: index,
-                                      size: (constraints.maxWidth -
-                                          48) /
-                                          2,
+                                      size: (constraints.maxWidth - 48) / 2,
                                       categoriesDetailList: category,
                                       onTap: (i) {
                                         _navigateToItemScreen(

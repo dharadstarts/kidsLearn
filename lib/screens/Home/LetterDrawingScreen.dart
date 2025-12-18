@@ -8,7 +8,9 @@ import 'package:scribble/scribble.dart';
 class LetterDrawingScreen extends StatefulWidget {
   final String letter;
   final String? image;
-
+  bool isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.shortestSide >= 600;
+  }
   const LetterDrawingScreen({super.key, required this.letter,this.image});
 
   @override
@@ -213,7 +215,7 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
             top: 100,
             left: 0,
             right: 0,
-            bottom: 230,
+            bottom: widget.isTablet(context) ? 440 : 230,
             child: ClipRect(
               child: Scribble(
                 notifier: notifier,
@@ -224,7 +226,7 @@ class _LetterDrawingScreenState extends State<LetterDrawingScreen> {
 
           /// Tools bottom bar (UI same as your Signature version)
           Positioned(
-            bottom: 180,
+            bottom: widget.isTablet(context) ?  350 : 180 ,
             left: 0,
             right: 0,
             child: Row(
